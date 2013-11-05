@@ -14,6 +14,10 @@
 ActiveRecord::Schema.define(version: 20131103030608) do
 
   create_table "attendances", force: true do |t|
+    t.integer  "event_id"
+    t.integer  "user_id"
+    t.string   "iCalUID"
+    t.boolean  "cancel",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
