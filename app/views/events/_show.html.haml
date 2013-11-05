@@ -1,0 +1,4 @@
+%span.glyphicon.glyphicon-remove.close
+%h2= @event.name
+%h3= @event.start.strftime("%B #{@event.start.day.ordinalize}, %Y %-I:%M%P")
+%h4= @event.why

@@ -1,0 +1,15 @@
+<% if !@events.empty? %>
+  $('#collapseTwo ul').html("<%= j render partial: 'events/sidebar', collection: @events %>");
+<% else %>
+  $('#collapseTwo ul').html("<p class='empty'>Nothing seems to be going on here...<br/>Why don't you add something!</p>");
+<% end %>
+
+$('#collapseTwo').collapse('toggle');
+$('#collapseOne').collapse('toggle');
+
+clearMarkers();
+
+Gmaps.store.markers = Gmaps.store.handler.addMarkers(<%= raw @hash.to_json %>, {
+  draggable: false,
+  animation: google.maps.Animation.DROP
+});

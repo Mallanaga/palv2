@@ -1,0 +1,5 @@
+%errors
+  - flash.each do |key, value| 
+    %div{class: "alert #{flash_class(key)}"}
+      = button_tag('&times;'.html_safe, class: 'close', data: {dismiss: 'alert'}, 'aria-hidden' => 'true') unless key == :error
+      = value

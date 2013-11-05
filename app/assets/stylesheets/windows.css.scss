@@ -1,0 +1,123 @@
+// Border Radius
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+       -o-border-radius: $radius;
+          border-radius: $radius;
+}
+
+// Drop shadows
+@mixin box-shadow($shadow) {
+  -webkit-box-shadow: $shadow;
+     -moz-box-shadow: $shadow;
+      -ms-box-shadow: $shadow;
+       -o-box-shadow: $shadow;
+          box-shadow: $shadow;
+}
+
+h1, h2, h3 {
+  margin-top: 0px;
+}
+
+#sideBar {
+  position: fixed;
+  top: 60px;
+  left: 90px;
+  width: 300px;
+
+  .dateSearch {
+    margin: 20px auto 10px auto;
+    .datepicker {
+      margin: auto;
+    }
+  }
+
+  .panel {
+    background-color: rgba(255,255,255,.8);
+    &.panel-default {
+      @include box-shadow( 2px 2px 4px rgba(0,0,0,.4) );
+    }
+  }
+
+  .panel-collapse.in {
+    background-color: transparent;
+  }
+
+  .panel-title a {
+    font-weight: bold;
+  }
+
+  #collapseTwo {
+    .panel-body {
+      padding: 0px;
+    }
+    ul {
+      list-style-type: none;
+      margin: 0px;
+      padding: 0px;
+      p.empty {
+        margin: 15px;
+      }
+      li {
+        cursor: pointer;
+        padding: 10px 15px 0px 15px;
+        border-bottom: 1px solid #e3e3e3;
+        &:last-child {
+          border: none;
+        }
+        color: #777;
+        width: 100%;
+        -webkit-transition: background 0.3s ease;
+        -moz-transition: background 0.3s ease;
+        -o-transition: background 0.3s ease;
+        -ms-transition: background 0.3s ease;
+        transition: background 0.3s ease;
+        &:hover {
+          background: white;
+        }
+      }
+    }
+  }
+}
+
+#eventWindow {
+  display: none;
+  position: fixed;
+  top: 60px;
+  left: 395px;
+  width: -webkit-calc(100% - 660px);
+  width: -moz-calc(100% - 660px);
+  width: calc(100% - 660px);
+  padding: 15px;
+  background-color: rgba(255,255,255,.8);
+  border: 1px #ddd solid;
+  @include border-radius( 5px );
+  @include box-shadow( 2px 2px 4px rgba(0,0,0,.4) );
+}
+
+#createEventWindow {
+  display: none;
+  position: fixed;
+  top: 60px;
+  left: 395px;
+  width: 362px;
+  padding: 15px;
+  background-color: rgba(255,255,255,.8);
+  border: 1px #ddd solid;
+  @include border-radius( 5px );
+  @include box-shadow( 2px 2px 4px rgba(0,0,0,.4) );
+  textarea { 
+    resize: vertical;
+  }
+}
+
+#debug {
+  position: fixed;
+  right: 0px;
+  top: 50%;
+  width: 400px;
+  height: 200px;
+}
+
+

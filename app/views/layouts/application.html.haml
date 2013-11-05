@@ -1,0 +1,24 @@
+!!! 5
+%html{lang: 'en'}
+  %head
+    %title= full_title(yield(:title))
+    = stylesheet_link_tag    'application', media: 'all', "data-turbolinks-track" => false
+    = javascript_include_tag 'application', "data-turbolinks-track" => false
+    = csrf_meta_tags
+    - set_meta_tags viewport: 'width=device-width, initial-scale=1.0'
+    - set_meta_tags canonical: request.host_with_port
+    = display_meta_tags
+    = render 'layouts/shim'
+    = auto_discovery_link_tag :atom, '/feed'
+    = auto_discovery_link_tag :rss, '/feed'
+    = render 'layouts/ga'
+    = render 'layouts/gmaps'
+  %body
+    .wrapper
+      = render 'layouts/header'
+      = render 'layouts/errors'
+      = yield
+      - if Rails.env.development?
+        #debug
+          = debug(params) 
+    = render 'layouts/footer'

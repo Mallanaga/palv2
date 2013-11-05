@@ -1,0 +1,8 @@
+-if object.errors.any?
+  .row     
+    .col-md-8.col-md-offset-2.alert.alert-danger
+      %b
+        = "This form contains #{pluralize(object.errors.count, "error")}"
+      %ul
+      -object.errors.full_messages.each do |msg| 
+        %li= msg

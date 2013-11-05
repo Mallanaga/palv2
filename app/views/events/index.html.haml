@@ -1,0 +1,47 @@
+= content_tag 'div', id: 'map', data: {events: @hash} do
+  - nil
+
+= content_tag 'div', id: 'sideBar', data: {} do
+  #accordion.panel-group
+    .panel.panel-default
+      .panel-heading
+        %h4.panel-title
+          = link_to 'Find things to do', '#collapseOne', data: {toggle: 'collapse', parent: '#accordion'}
+      #collapseOne.panel-collapse.collapse.in
+        .panel-body
+          = form_tag find_events_path, class: 'input-group', method: 'get', remote: true do 
+            = text_field_tag :location, nil, placeholder: 'Location', class: 'form-control'
+            = hidden_field_tag :date, Date.current
+            %span.input-group-btn
+              = submit_tag 'Search', class: 'btn btn-default'
+          .dateSearch
+
+    .panel.panel-default
+      .panel-heading
+        %h4.panel-title
+          = link_to "Events in <span id='userSearch'>your area</span>".html_safe, '#collapseTwo', data: {toggle: 'collapse', parent: '#accordion'}
+          = link_to '', new_event_path, class: 'glyphicon glyphicon-plus newEvent', remote: true
+          
+      #collapseTwo.panel-collapse.collapse
+        .panel-body
+          %ul
+            - if !@events.empty?
+              = render(partial: 'sidebar', collection: @events)
+            - else
+              %p.empty
+                Nothing seems to be going on here...
+                %br
+                Why don't you add something!
+                
+    .panel.panel-default
+      .panel-heading
+        %h4.panel-title
+          = link_to 'Pals', '#collapseThree', data: {toggle: 'collapse', parent: '#accordion'}
+      #collapseThree.panel-collapse.collapse
+        .panel-body
+
+= content_tag 'div', id: 'eventWindow', data: {} do
+  %span.glyphicon.glyphicon-remove.close
+
+= content_tag 'div', id: 'createEventWindow', data: {} do
+  %span.glyphicon.glyphicon-remove.close
