@@ -13,3 +13,5 @@ Gmaps.store.markers = Gmaps.store.handler.addMarkers(<%= raw @hash.to_json %>, {
   draggable: false,
   animation: google.maps.Animation.DROP
 });
+
+Gmaps.store.handler.map.fitToBounds(Gmaps.store.markers);
