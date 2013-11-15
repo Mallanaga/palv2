@@ -1,0 +1,11 @@
+$('#collapseThree .panel-body').html("<%= j render partial: 'users/index' %>");
+
+$('#collapseThree').collapse('show');
+
+// find user autocomplete
+$('#collapseThree input#users').tokenInput('/find-users.json', {
+  theme: 'facebook',
+  preventDuplicates: true,
+  hintText: 'Search for pals, or type email addresses to invite people',
+  placeholder: 'Find pals'
+});

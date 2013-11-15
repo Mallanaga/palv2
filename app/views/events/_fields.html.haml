@@ -11,8 +11,8 @@
     %span.add-on to
     = f.text_field :finish
 .form-group
-  = f.label :why, class: 'control-label'
-  = f.text_area :why, class: 'form-control'
+  = f.label :description, class: 'control-label'
+  = f.text_area :description, class: 'form-control'
 .form-group
   = f.radio_button :private, false
   = f.label :private, "Public", value: false, title: 'Visible to all'
@@ -21,4 +21,6 @@
   = f.label :private, "Private", value: true, title: 'Visible to chosen'
 .form-group
   = f.label :location, class: 'control-label'
-  = f.text_field :location, class: 'form-control'
+  = f.text_field :location, placeholder: 'Search here, or click the map to place a pin', class: 'form-control'
+  = f.hidden_field :lat
+  = f.hidden_field :lng

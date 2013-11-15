@@ -1,7 +1,5 @@
-- provide(:title, @title)
-
 %span.glyphicon.glyphicon-remove.close
 %h2 Create Event
-= form_for @event, html: {role: 'form'} do |f| 
+= form_for @event, html: {role: 'form'}, remote: true do |f| 
   = render 'fields', f: f
   = f.submit 'Create event', class: 'btn btn-primary'

@@ -7,5 +7,6 @@ class CreateAttendances < ActiveRecord::Migration
       t.boolean :cancel, default: false
       t.timestamps
     end
+    add_index :attendances, [:event_id, :user_id], unique: :true
   end
 end

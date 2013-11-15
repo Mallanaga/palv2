@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: events
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  start      :datetime
+#  why        :text
+#  location   :string(255)
+#  lat        :float
+#  lng        :float
+#  private    :boolean          default(FALSE)
+#  created_at :datetime
+#  updated_at :datetime
+#  finish     :datetime
+#  user_id    :integer
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 # This model initially had no columns defined.  If you add columns to the

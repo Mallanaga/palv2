@@ -1,11 +1,7 @@
-- provide(:title, @title)
-
-.col-lg-offset-2
-  %h1 Sign up
 = form_for @user, html: {class: 'form-horizontal', role: 'form'} do |f| 
   = render 'fields', f: f
   .form-group
-    .col-lg-offset-2.col-lg-10
+    .col-sm-offset-1.col-sm-10
       = f.submit 'Create user', class: 'btn btn-primary'
       \-or-
-      = link_to 'Log in!', signin_path, class: 'btn btn-default btn-sm'
+      = link_to 'Log in!', signin_path, class: 'btn btn-default btn-sm', remote: true

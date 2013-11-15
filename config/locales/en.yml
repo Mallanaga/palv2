@@ -20,7 +20,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
-  attributes:
-    user:
-      password_digest: "Password"
+  hello: 'Hello world'
+  activerecord:
+    attributes:
+      user:
+        password_digest: 'Password'
+      event:
+        lat: 'Address'

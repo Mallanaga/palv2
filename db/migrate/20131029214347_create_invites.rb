@@ -6,7 +6,6 @@ class CreateInvites < ActiveRecord::Migration
       
       t.timestamps
     end
-    add_index :invites, :user_id
-    add_index :invites, :event_id
+    add_index :invites, [:user_id, :event_id], unique: :true
   end
 end

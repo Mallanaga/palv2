@@ -1,14 +1,17 @@
 = render 'layouts/error_messages', object: f.object
-
 .form-group
-  = f.label :name, class: 'col-lg-2 control-label'
-  .col-lg-8
-    = f.text_field :name, class: 'form-control'
+  .col-sm-10.col-sm-offset-1
+    = f.text_field :name, placeholder: 'Full name', class: 'form-control'
 .form-group
-  = f.label :email, class: 'col-lg-2 control-label'
-  .col-lg-8
-    = f.text_field :email, class: 'form-control'
+  .col-sm-10.col-sm-offset-1
+    = f.radio_button :gender, :M
+    = f.label :gender, "Male", value: :M
+    &nbsp;&nbsp;&nbsp;
+    = f.radio_button :gender, :F
+    = f.label :gender, "Female", value: :F
 .form-group
-  = f.label :password, class: 'col-lg-2 control-label'
-  .col-lg-8
-    = f.password_field :password, class: 'form-control'
+  .col-sm-10.col-sm-offset-1
+    = f.text_field :email, placeholder: 'Email address', class: 'form-control'
+.form-group
+  .col-sm-10.col-sm-offset-1
+    = f.password_field :password, placeholder: 'Password', class: 'form-control'

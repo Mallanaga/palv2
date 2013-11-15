@@ -1,0 +1,12 @@
+= form_tag sessions_path, class: 'form-horizontal', role: 'form' do
+  .form-group
+    .col-sm-10.col-sm-offset-1
+      = text_field_tag :email, params[:email], placeholder: 'Email', class: 'form-control'
+  .form-group
+    .col-sm-10.col-sm-offset-1
+      = password_field_tag :password, nil, placeholder: 'Password', class: 'form-control'
+  .form-group
+    .col-sm-offset-1.col-sm-10
+      = submit_tag "Log in", class: "btn btn-primary"
+      \-or-
+      = link_to "Sign up!", signup_path, class: 'btn btn-default btn-sm', remote: true

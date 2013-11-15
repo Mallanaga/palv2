@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: attendances
+#
+#  id         :integer          not null, primary key
+#  event_id   :integer
+#  user_id    :integer
+#  iCalUID    :string(255)
+#  cancel     :boolean          default(FALSE)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 # This model initially had no columns defined.  If you add columns to the

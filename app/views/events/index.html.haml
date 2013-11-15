@@ -7,11 +7,13 @@
       .panel-heading
         %h4.panel-title
           = link_to 'Find things to do', '#collapseOne', data: {toggle: 'collapse', parent: '#accordion'}
-      #collapseOne.panel-collapse.collapse.in
+      #collapseOne.panel-collapse.collapse
         .panel-body
           = form_tag find_events_path, class: 'input-group', method: 'get', remote: true do 
             = text_field_tag :location, nil, placeholder: 'Location', class: 'form-control'
-            = hidden_field_tag :date, Date.current
+            = hidden_field_tag :lat
+            = hidden_field_tag :lng
+            = hidden_field_tag :date
             %span.input-group-btn
               = submit_tag 'Search', class: 'btn btn-default'
           .dateSearch
@@ -19,8 +21,11 @@
     .panel.panel-default
       .panel-heading
         %h4.panel-title
-          = link_to "Events in <span id='userSearch'>your area</span>".html_safe, '#collapseTwo', data: {toggle: 'collapse', parent: '#accordion'}
-          = link_to '', new_event_path, class: 'glyphicon glyphicon-plus newEvent', remote: true
+          = link_to "Events in <span id='userSearch'>your area</span>".html_safe, '#collapseTwo', data: {parent: '#accordion'}, id: 'show_events_click'
+          - if signed_in?
+            = link_to '', new_event_path, class: 'glyphicon glyphicon-plus act-button', id: 'new_event', remote: true, title: 'Add Event'
+          - else
+            = link_to '', '#collapseFour', class: 'glyphicon glyphicon-plus act-button', data: {toggle: 'collapse', parent: '#accordion'}, title: 'Add Event'
           
       #collapseTwo.panel-collapse.collapse
         .panel-body
@@ -31,14 +36,34 @@
               %p.empty
                 Nothing seems to be going on here...
                 %br
-                Why don't you add something!
+                Why don't you 
+                = link_to 'add something!', new_event_path, id: 'new_event', remote: true
                 
+    - if signed_in?  
+      .panel.panel-default
+        .panel-heading
+          %h4.panel-title
+            = link_to 'Pals', '#collapseThree', data: {toggle: 'collapse', parent: '#accordion'}
+            = link_to '', users_path, class: 'glyphicon glyphicon-search act-button', title: 'Pals', remote: true
+        #collapseThree.panel-collapse.collapse
+          .panel-body
+
     .panel.panel-default
       .panel-heading
         %h4.panel-title
-          = link_to 'Pals', '#collapseThree', data: {toggle: 'collapse', parent: '#accordion'}
-      #collapseThree.panel-collapse.collapse
+          - if signed_in?
+            = link_to current_user.first_name, current_user, remote: true
+            = link_to '', signout_path, class: 'glyphicon glyphicon-log-out act-button', title: 'Log Out'
+            = link_to '', settings_path, class: 'glyphicon glyphicon-wrench act-button', title: 'Settings', remote: true
+            = link_to '', notifications_path, class: 'glyphicon glyphicon-bell act-button', title: 'Notifications', remote: true
+          - else
+            = link_to 'Log in', '#collapseFour', data: {toggle: 'collapse', parent: '#accordion'}
+      #collapseFour.panel-collapse.collapse
         .panel-body
+          - if signed_in?
+            %ul
+          - else
+            = render('sessions/new')
 
 = content_tag 'div', id: 'eventWindow', data: {} do
   %span.glyphicon.glyphicon-remove.close

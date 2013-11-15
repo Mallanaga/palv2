@@ -8,14 +8,14 @@ gem 'chronic'
 gem 'gmaps4rails'
 gem 'httparty'
 gem 'rails_autolink'
+gem 'public_activity', '~> 1.4.0'
 gem 'thin' # Use thin as the app server
 gem 'anjlab-bootstrap-rails', require: 'bootstrap-rails', github: 'anjlab/bootstrap-rails'
-# gem 'bootstrap-datepicker', '~> 1.2.0', github: 'eternicode/bootstrap-datepicker'
 gem 'meta-tags', require: 'meta_tags'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
+# gem 'jquery-ui-rails'
 
 # group :assets
 gem 'sass-rails', '~> 4.0.0'

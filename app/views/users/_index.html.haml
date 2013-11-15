@@ -1,0 +1,6 @@
+= form_tag relationships_path, role: 'form', method: 'post', remote: true do
+  .form-group
+    = text_field_tag :users, nil, class: 'form-control'
+  = submit_tag 'Add as Pals', class: 'btn btn-primary'
+%ul
+  = render(partial: 'relationships/pal', collection: @pals)

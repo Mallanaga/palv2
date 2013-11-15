@@ -4,20 +4,21 @@ class EventsController < ApplicationController
   before_filter :admin_user,     only: [:destroy]
   before_filter :correct_user,   only: [:edit, :update]
   before_filter :signed_in_user, only: [:create, :destroy, :edit, :new, :update]
-
   respond_to :html, :js
 
   def create
+    params[:event][:user_id] = current_user.id
+    params[:event][:finish] = params[:event][:start] if params[:event][:finish].blank?
     @event = current_user.events.build(event_params)
     if @event.save
-      current_user.invite!(@event)
+      current_user.invite!(@event) if @event.private?
+      current_user.attend!(@event)
       flash[:success] = "'#{@event.name}' created"
-      redirect_back_or root_url
+      respond_with(@event)
     else
-      @events = []
-      flash[:error] = 'Invalid Event parameters'
       render 'events/new'
     end
+    
   end
 
   def destroy
@@ -30,32 +31,36 @@ class EventsController < ApplicationController
   end
 
   def find
-    # geocode params[:location]
-    date = params[:date].to_date
-    @events = Event.where(start: date.beginning_of_day.. date.end_of_day,
-                          finish: date.beginning_of_day.. date.end_of_day)
+    @location = params[:location].blank? ? 'your area' : params[:location]
+    @ne = params[:ne]
+    @sw = params[:sw]
+    date = params[:date].blank? ? Date.today : params[:date].to_date
+    days_events = Event.where(start: date.beginning_of_day .. date.end_of_day,
+                              finish: date.beginning_of_day .. date.end_of_day)
+    @events = days_events#.where(lat: @sw[0].to_f .. @ne[0].to_f,
+                         #       lng: @sw[1].to_f .. @ne[1].to_f)
     @hash = Gmaps4rails.build_markers(@events) do |event, marker|
       marker.lat event.lat
       marker.lng event.lng
-      # marker.title "#{pluralize(event.users.size, 'person')} going"
+      marker.title "#{pluralize(event.attendees.size, 'person')} going"
       marker.infowindow render_to_string(partial: '/events/infobox', 
                                          locals: {object: event})
     end
-
-    respond_with(@events, @hash)
+    respond_with(@events, @hash, @location)
   end
 
   def index
-    date = Date.current
+    date = Date.today
     @events = Event.where(start: date.beginning_of_day.. date.end_of_day,
                           finish: date.beginning_of_day.. date.end_of_day)
     @hash = Gmaps4rails.build_markers(@events) do |event, marker|
       marker.lat event.lat
       marker.lng event.lng
-      # marker.title "#{pluralize(event.users.size, 'person')} going"
+      marker.title "#{pluralize(event.attendees.size, 'person')} going"
       marker.infowindow render_to_string(partial: '/events/infobox', 
                                          locals: {object: event}) 
     end
+    respond_with(@events, @hash)
   end
 
   def new

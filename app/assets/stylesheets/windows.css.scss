@@ -20,10 +20,17 @@ h1, h2, h3 {
   margin-top: 0px;
 }
 
-#sideBar {
-  position: fixed;
-  top: 60px;
+.errors {
+  position: absolute;
   left: 90px;
+  z-index: 10;
+}
+
+#sideBar {
+  position: absolute;
+  left: 90px;
+  top: 60px;
+  
   width: 300px;
 
   .dateSearch {
@@ -48,9 +55,12 @@ h1, h2, h3 {
     font-weight: bold;
   }
 
-  #collapseTwo {
+  #collapseTwo, #collapseFour {
     .panel-body {
       padding: 0px;
+      form {
+        padding-top: 15px;
+      }
     }
     ul {
       list-style-type: none;
@@ -79,11 +89,41 @@ h1, h2, h3 {
       }
     }
   }
+  #collapseThree {
+    ul {
+      list-style-type: none;
+      margin: 15px 0px 0px 0px;
+      padding: 0px;
+      li.pal {
+        p {
+          float: left;
+          margin-top: 7px;
+        }
+        height: 54px;
+        cursor: pointer;
+        padding: 10px 15px 0px 15px;
+        border-bottom: 1px solid #e3e3e3;
+        &:last-child {
+          border: none;
+        }
+        color: #777;
+        width: 100%;
+        -webkit-transition: background 0.3s ease;
+        -moz-transition: background 0.3s ease;
+        -o-transition: background 0.3s ease;
+        -ms-transition: background 0.3s ease;
+        transition: background 0.3s ease;
+        &:hover {
+          background: white;
+        }
+      }
+    }
+  }
 }
 
 #eventWindow {
   display: none;
-  position: fixed;
+  position: absolute;
   top: 60px;
   left: 395px;
   width: -webkit-calc(100% - 660px);
@@ -98,7 +138,7 @@ h1, h2, h3 {
 
 #createEventWindow {
   display: none;
-  position: fixed;
+  position: absolute;
   top: 60px;
   left: 395px;
   width: 362px;
@@ -112,8 +152,21 @@ h1, h2, h3 {
   }
 }
 
+#findUserWindow {
+  display: none;
+  position: absolute;
+  top: 60px;
+  left: 395px;
+  width: 362px;
+  padding: 15px;
+  background-color: rgba(255,255,255,.8);
+  border: 1px #ddd solid;
+  @include border-radius( 5px );
+  @include box-shadow( 2px 2px 4px rgba(0,0,0,.4) );
+}
+
 #debug {
-  position: fixed;
+  position: absolute;
   right: 0px;
   top: 50%;
   width: 400px;
