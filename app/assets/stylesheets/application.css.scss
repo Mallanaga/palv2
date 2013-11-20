@@ -18,3 +18,30 @@
 
 // import original bootstrap
 @import "twitter/bootstrap";
+
+.best_in_place {
+  h3 {
+    input {
+      @extend .form-control;
+      position: relative;
+      top: -7px;
+      left: -3px;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1.1;
+      padding-left: 3px;
+    }
+  }
+  h4 {
+    input {
+      @extend .form-control;
+      position: relative;
+      top: -7px;
+      left: -3px;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.1;
+      padding-left: 3px;
+    }
+  }
+}

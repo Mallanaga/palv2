@@ -10,6 +10,7 @@ gem 'public_activity', '~> 1.4.0'
 gem 'thin' # Use thin as the app server
 gem 'anjlab-bootstrap-rails', require: 'bootstrap-rails', github: 'anjlab/bootstrap-rails'
 gem 'meta-tags', require: 'meta_tags'
+gem 'best_in_place', github: 'bernat/best_in_place'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

@@ -6,6 +6,14 @@ GIT
       railties (>= 3.0)
       sass (>= 3.2)
 
+GIT
+  remote: git://github.com/bernat/best_in_place.git
+  revision: df178520bf9ba405baee9528d5dbb630d6ff760c
+  specs:
+    best_in_place (2.1.0)
+      jquery-rails
+      rails (>= 3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -48,6 +56,7 @@ GEM
     coffee-script-source (1.6.3)
     daemons (1.1.9)
     erubis (2.7.0)
+    eventmachine (1.0.3)
     eventmachine (1.0.3-x86-mingw32)
     execjs (2.0.2)
     gmaps4rails (2.1.0)
@@ -148,6 +157,7 @@ DEPENDENCIES
   anjlab-bootstrap-rails!
   annotate
   bcrypt-ruby (~> 3.1.2)
+  best_in_place!
   coffee-rails (~> 4.0.0)
   gmaps4rails
   haml

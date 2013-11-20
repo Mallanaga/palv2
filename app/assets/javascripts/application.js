@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.widget
+//= require best_in_place.purr
 //= require turbolinks
 //= require twitter/bootstrap
 //= require_tree .

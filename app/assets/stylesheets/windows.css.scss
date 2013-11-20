@@ -168,6 +168,15 @@ h1, h2, h3 {
   textarea { 
     resize: vertical;
   }
+  .scroll {
+    margin-top: 10px;
+    max-height: 650px;
+    overflow: auto;
+    white-space: nowrap;
+    .row {
+      max-width: 100%;
+    }
+  }
   #palbum {
     border-left: 1px #ddd solid;
     position: relative;
@@ -231,5 +240,3 @@ h1, h2, h3 {
   width: 400px;
   height: 200px;
 }
-
-

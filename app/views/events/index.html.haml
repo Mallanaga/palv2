@@ -22,7 +22,7 @@
     .panel.panel-default
       .panel-heading
         %h4.panel-title
-          = link_to "Events in <span id='userSearch'>your area</span>".html_safe, '#collapseTwo', data: {parent: '#accordion'}, id: 'show_events_click'
+          = link_to "Events in <span id='userSearch'>your area</span>".html_safe, '#collapseTwo', data: {toggle: 'collapse', parent: '#accordion'}, id: 'show_events_click'
           - if signed_in?
             = link_to '', new_event_path, class: 'glyphicon glyphicon-plus act-button', id: 'new_event', remote: true, title: 'Add Event'
           - else

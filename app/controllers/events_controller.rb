@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   before_filter :admin_user,     only: [:destroy]
   before_filter :correct_user,   only: [:edit, :update]
   before_filter :signed_in_user, only: [:create, :destroy, :edit, :new, :update]
-  respond_to :html, :js
+  respond_to :html, :js, :json
 
   def create
     Time.zone = Time.zone = JSON.load(open("https://maps.googleapis.com/maps/api/timezone/json?location=#{params[:event][:lat]},#{params[:event][:lng]}&timestamp=1331161200&sensor=false"))["timeZoneId"]
@@ -127,12 +127,8 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
-    if @event.update_attributes(event_params)
-      flash[:success] = 'Event updated'
-      sign_in current_user
-    else
-      flash[:error] = 'Invalid Event parameters'
-    end 
+    @event.update_attributes(event_params)
+    respond_with(@event)
   end
 
   private

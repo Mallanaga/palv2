@@ -23,8 +23,8 @@ class UsersController < ApplicationController
   end
 
   def find
-    @users = User.order(:name)
-    render json: @users.where("name like ?", "%#{params[:q]}%").reject{ |u| u.id == current_user.id }
+    @users = User.where.not(id: current_user.id).order(:name)
+    render json: @users.where("name like ?", "%#{params[:q]}%")
   end
 
   def history

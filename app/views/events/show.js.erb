@@ -6,6 +6,8 @@ $('#eventWindow:hidden').fadeIn();
 
 $('#comments .btn-primary').attr('disabled', true);
 
+$('.best_in_place').best_in_place();
+
 $('#fileupload').fileupload({
   add: function(e, data) {
     var file, types;
