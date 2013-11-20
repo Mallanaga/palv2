@@ -165,6 +165,9 @@ h1, h2, h3 {
   border: 1px #ddd solid;
   @include border-radius( 5px );
   @include box-shadow( 2px 2px 4px rgba(0,0,0,.4) );
+  textarea { 
+    resize: vertical;
+  }
   #palbum {
     border-left: 1px #ddd solid;
     position: relative;

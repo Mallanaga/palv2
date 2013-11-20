@@ -26,19 +26,10 @@
           - if signed_in?
             = link_to '', new_event_path, class: 'glyphicon glyphicon-plus act-button', id: 'new_event', remote: true, title: 'Add Event'
           - else
-            = link_to '', '#collapseFour', class: 'glyphicon glyphicon-plus act-button', data: {toggle: 'collapse', parent: '#accordion'}, title: 'Add Event'
-          
+            = link_to '', '#collapseFour', class: 'glyphicon glyphicon-plus act-button', data: {toggle: 'collapse', parent: '#accordion'}, title: 'Add Event'   
       #collapseTwo.panel-collapse.collapse
         .panel-body
           %ul
-            - if !@events.empty?
-              = render(partial: 'sidebar', collection: @events)
-            - else
-              %p.empty
-                Nothing seems to be going on here...
-                %br
-                Why don't you 
-                = link_to 'add something!', new_event_path, id: 'new_event', remote: true
                 
     - if signed_in?  
       .panel.panel-default

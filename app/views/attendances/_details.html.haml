@@ -1,0 +1,18 @@
+- if @event.private?
+  %h4
+    %em This is a private event
+  .row
+    .col-sm-6
+      %h4= "Invited (#{@event.invitees.size})"
+      .list-group
+        = render(partial: 'users/user', collection: @event.invitees-@event.attendees)
+    .col-sm-6
+      %h4= "Confirmed (#{@event.attendees.size})"
+      .list-group
+        = render(partial: 'users/user', collection: @event.attendees)
+- else
+  .row
+    .col-sm-6
+      %h4= "Attending (#{@event.attendees.size})"
+      .list-group
+        = render(partial: 'users/user', collection: @event.attendees)

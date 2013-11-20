@@ -2,9 +2,25 @@
 = link_to '', @event, class: 'glyphicon glyphicon-refresh act-button refresh', title: 'Refresh', remote: true
 .row
   .col-sm-4
+    = link_to '', edit_event_path(@event), class: 'glyphicon glyphicon-pencil act-button', remote: true, title: 'Edit Event'
+    = link_to '', @event, method: :delete, data: { confirm: "You're sure you want to DELETE the event '#{@event.name}?'" }, class: 'glyphicon glyphicon-trash act-button', remote: true, title: 'Delete event'
+    %h2= @event.name
+    %h3= @event.start.strftime("%B #{@event.start.day.ordinalize}, %Y %-I:%M%P")
+    %h4= @event.description
+    - if signed_in?
+      - if current_user.attending?(@event)
+        = form_for current_user.attendances.where(event_id: @event.id)[0], html: { method: :delete }, remote: true do |f| 
+          = f.submit 'Going', class: 'btn btn-success', id: 'go_button'
+      - else
+        = form_for Attendance.new, remote: true do |f| 
+          = f.hidden_field :event_id, value: @event.id
+          = f.hidden_field :user_id, value: current_user.id
+          = f.submit 'Go!', class: 'btn btn-info'
+    - else
+      = link_to 'Go!', signin_path, class: 'btn btn-info', remote: true
     #comments
       = render 'comments/comment'
     #details
-      = render 'events/details'
+      = render 'attendances/details'
   .col-sm-8#palbum
     = render 'events/palbum'

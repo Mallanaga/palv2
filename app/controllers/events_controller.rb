@@ -56,7 +56,7 @@ class EventsController < ApplicationController
   end
 
   def index
-    @events = []
+
   end
 
   def new
