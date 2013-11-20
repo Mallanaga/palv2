@@ -4,9 +4,6 @@ jQuery ->
     Gmaps.store.handler.removeMarker Gmaps.store.eventPin if Gmaps.store.eventPin
     $(this).parent().fadeOut -> $(this).html('')
 
-  $('.dateSearch').datepicker
-    todayBtn: 'linked'
-
   $(document).on 'focusout', '#createEventWindow #event_location', ->
     typeLocation(this, updateEventMarker)
 
@@ -35,12 +32,15 @@ jQuery ->
     Gmaps.store.markers[$(this).data('marker')].panTo()
     Gmaps.store.markers[$(this).data('marker')].click()
 
+  $('.dateSearch').datepicker
+    todayBtn: 'linked'
+
   # get date from datepicker and pass it to a form
   $('.dateSearch').datepicker().on 'changeDate', ->
     dateObject =  $(this).datepicker('getDate')
-    year = dateObject.getUTCFullYear()
-    month =  dateObject.getUTCMonth()+1
-    day = dateObject.getUTCDate()
+    year = dateObject.getFullYear()
+    month =  dateObject.getMonth()+1
+    day = dateObject.getDate()
     $('#collapseOne input#date').val year+'-'+month+'-'+day
 
   mapSize()

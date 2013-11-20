@@ -2,7 +2,8 @@ $("#createEventWindow").html("<%= j render partial: 'events/new' %>");
 
 $('.input-daterange').datepicker({
   todayBtn: 'linked',
-  autoclose: true
+  autoclose: true,
+  format: 'yyyy-mm-dd'
 });
 
 $('.field_with_errors').parents('.form-group').addClass('has-error');

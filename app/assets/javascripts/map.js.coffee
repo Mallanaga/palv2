@@ -8,11 +8,15 @@ jQuery ->
         lat: position.coords.latitude
         lng: position.coords.longitude
       updateUserMarker userLocation
+      year = new Date().getFullYear()
+      month =  new Date().getMonth()+1
+      day = new Date().getDate()
       $.ajax(
         dataType: 'script'
         data:
           lat: position.coords.latitude
           lng: position.coords.longitude
+          date: year+'-'+month+'-'+day
         type: 'GET'
         url: '/find-events'
       )

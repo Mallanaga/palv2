@@ -9,11 +9,10 @@ class EventsController < ApplicationController
 
   def create
     Time.zone = Time.zone = JSON.load(open("https://maps.googleapis.com/maps/api/timezone/json?location=#{params[:event][:lat]},#{params[:event][:lng]}&timestamp=1331161200&sensor=false"))["timeZoneId"]
-    Chronic.time_class = Time.zone
     params[:event][:user_id] = current_user.id
-    params[:event][:start] = Chronic.parse params[:event][:start]
-    params[:event][:finish] = Chronic.parse params[:event][:finish]
-    params[:event][:finish] = params[:event][:start] if params[:event][:finish].blank?
+    params[:event][:start] = params[:event][:start].to_date
+    params[:event][:finish] = params[:event][:finish].to_date
+    params[:event][:finish] = params[:event][:start].to_date if params[:event][:finish].blank?
     @event = current_user.events.build(event_params)
     if @event.save
       if @event.private?
@@ -41,8 +40,7 @@ class EventsController < ApplicationController
   end
 
   def find
-    Time.zone = JSON.load(open("https://maps.googleapis.com/maps/api/timezone/json?location=#{params[:lat]},#{params[:lng]}&timestamp=1331161200&sensor=false"))["timeZoneId"]
-    date = !params[:date].blank? ? params[:date].to_date : Date.today
+    date = params[:date].to_date
     range = signed_in? ? current_user.range : 10
     days_events = Event.where("start <= ? AND finish >= ?", date.end_of_day,
                               date.beginning_of_day).where(:private => false)
