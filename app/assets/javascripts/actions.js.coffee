@@ -28,7 +28,6 @@ jQuery ->
       $(this).val('Going').removeClass('btn-danger').addClass('btn-success')
   
   $(document).on 'click', '#comment_comment', ->
-    $('#comments .btn-primary').attr 'disabled', true
     $('#comment_comment').keyup ->
       $(this).val($(this).val().replace /^\s+|\s+$/g, "")
       unless $(this).val().length < 10

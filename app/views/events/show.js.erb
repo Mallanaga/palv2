@@ -4,6 +4,8 @@ $('#createEventWindow:visible').fadeOut();
 
 $('#eventWindow:hidden').fadeIn();
 
+$('#comments .btn-primary').attr('disabled', true);
+
 $('#fileupload').fileupload({
   add: function(e, data) {
     var file, types;
