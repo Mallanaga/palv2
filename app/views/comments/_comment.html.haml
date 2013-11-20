@@ -3,9 +3,10 @@
   = form_for Comment.new, remote: true do |f| 
     .form-group
       = f.hidden_field :event_id, value: @event.id
-      = f.label :comment, "#{current_user.first_name}", class: 'control-label'
+      = f.label :comment, current_user.first_name, class: 'control-label'
       = f.text_area :comment, class: 'form-control'
-    = f.submit "Comment", class: 'btn btn-primary pull-right'
+    .form-group
+      = f.submit 'Comment', class: 'btn btn-primary pull-right'
 %br
 %br
 %br
@@ -20,4 +21,3 @@
             = time_ago_in_words(comment.created_at)
             ago
         %p.list-group-item-text= comment.comment 
-

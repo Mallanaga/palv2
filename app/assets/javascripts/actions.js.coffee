@@ -27,6 +27,15 @@ jQuery ->
     .mouseleave ->
       $(this).val('Going').removeClass('btn-danger').addClass('btn-success')
   
+  $(document).on 'click', '#comment_comment', ->
+    $('#comments .btn-primary').attr 'disabled', true
+    $('#comment_comment').keyup ->
+      $(this).val($(this).val().replace /^\s+|\s+$/g, "")
+      unless $(this).val().length < 10
+        $('#comments .btn-primary').attr 'disabled', false
+      else
+        $('#comments .btn-primary').attr 'disabled', true
+
   #moves map to marker clicked + open infowindow
   $(document).on 'click', '#sideBar li.sb', ->
     Gmaps.store.markers[$(this).data('marker')].panTo()
