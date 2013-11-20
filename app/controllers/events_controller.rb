@@ -101,12 +101,12 @@ class EventsController < ApplicationController
                                          locals: {object: event})
       marker.picture({
         anchor: [10,34],
-        url: '/assets/lime_marker.png',
+        url: '/lime_marker.png',
         width: 20,
         height: 34 })
       marker.shadow({
         anchor: [2,22],
-        url: '/assets/sprite_shadow.png',
+        url: '/sprite_shadow.png',
         width: 29,
         height: 22 })
     end
@@ -119,12 +119,12 @@ class EventsController < ApplicationController
                                          locals: {object: event})
       marker.picture({
         anchor: [10,34],
-        url: '/assets/cyan_marker.png',
+        url: '/cyan_marker.png',
         width: 20,
         height: 34 })
       marker.shadow({
         anchor: [2,22],
-        url: '/assets/sprite_shadow.png',
+        url: '/sprite_shadow.png',
         width: 29,
         height: 22 })
     end
