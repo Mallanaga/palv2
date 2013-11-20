@@ -1,0 +1,10 @@
+- if image_counter == 0
+  .item.active
+    = image_tag image.image_url, alt: "#{image.user.first_name}'s image"
+    .carousel-caption
+      = image.description
+- else
+  .item
+    = image_tag image.image_url, alt: "#{image.user.first_name}'s image"
+    .carousel-caption
+      = image.description

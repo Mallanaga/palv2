@@ -15,13 +15,14 @@ gem 'meta-tags', require: 'meta_tags'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-# gem 'jquery-ui-rails'
+gem 'jquery-ui-rails'
 
 # group :assets
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'haml'
+gem 'fastimage'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'

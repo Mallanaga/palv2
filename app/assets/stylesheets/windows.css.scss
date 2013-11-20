@@ -20,12 +20,6 @@ h1, h2, h3 {
   margin-top: 0px;
 }
 
-.errors {
-  position: absolute;
-  left: 90px;
-  z-index: 10;
-}
-
 #sideBar {
   position: absolute;
   left: 90px;
@@ -55,9 +49,16 @@ h1, h2, h3 {
     font-weight: bold;
   }
 
+  .panel-body {
+    overflow: auto;
+  }
+
   #collapseTwo, #collapseFour {
     .panel-body {
       padding: 0px;
+      &.lo {
+        padding: 15px;
+      }
       form {
         padding-top: 15px;
       }
@@ -69,7 +70,8 @@ h1, h2, h3 {
       p.empty {
         margin: 15px;
       }
-      li {
+      li.sb {
+        height: 70px;
         cursor: pointer;
         padding: 10px 15px 0px 15px;
         border-bottom: 1px solid #e3e3e3;
@@ -89,11 +91,40 @@ h1, h2, h3 {
       }
     }
   }
+
   #collapseThree {
+    .panel-body {
+      padding: 0px;
+      form.add-pals {
+        padding: 15px;
+      }
+    }
     ul {
       list-style-type: none;
-      margin: 15px 0px 0px 0px;
+      margin: 0px;
       padding: 0px;
+      p.empty {
+        margin: 15px;
+      }
+      li.sb {
+        height: 70px;
+        cursor: pointer;
+        padding: 10px 15px 0px 15px;
+        border-bottom: 1px solid #e3e3e3;
+        &:last-child {
+          border: none;
+        }
+        color: #777;
+        width: 100%;
+        -webkit-transition: background 0.3s ease;
+        -moz-transition: background 0.3s ease;
+        -o-transition: background 0.3s ease;
+        -ms-transition: background 0.3s ease;
+        transition: background 0.3s ease;
+        &:hover {
+          background: white;
+        }
+      }
       li.pal {
         p {
           float: left;
@@ -134,9 +165,47 @@ h1, h2, h3 {
   border: 1px #ddd solid;
   @include border-radius( 5px );
   @include box-shadow( 2px 2px 4px rgba(0,0,0,.4) );
+  #palbum {
+    border-left: 1px #ddd solid;
+    position: relative;
+    top: -21px;
+    #carousel-palbum {
+      .carousel-inner .item {
+        max-width: 100%;
+        max-height: 550px;
+        img {
+          max-height: 550px;
+          margin: 0px auto;
+        }
+      }
+    }
+    .carousel-previews {
+      position: relative;
+      top: -33px;
+      overflow: hidden;
+      white-space: nowrap;
+      form {
+        display: inline-block;
+        position: relative;
+        top: 6px;
+        .fileinput-exists {
+          text-align: center;
+        }
+      }
+      .preview {
+        display: inline-block;
+      }
+    }
+  }
+  .close {
+    z-index: 99;
+  }
 }
 
 #createEventWindow {
+  #invite_block{
+    display: none;
+  }
   display: none;
   position: absolute;
   top: 60px;
@@ -152,23 +221,10 @@ h1, h2, h3 {
   }
 }
 
-#findUserWindow {
-  display: none;
-  position: absolute;
-  top: 60px;
-  left: 395px;
-  width: 362px;
-  padding: 15px;
-  background-color: rgba(255,255,255,.8);
-  border: 1px #ddd solid;
-  @include border-radius( 5px );
-  @include box-shadow( 2px 2px 4px rgba(0,0,0,.4) );
-}
-
 #debug {
   position: absolute;
   right: 0px;
-  top: 50%;
+  top: 40%;
   width: 400px;
   height: 200px;
 }

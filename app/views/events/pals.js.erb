@@ -1,0 +1,16 @@
+<% if !@events.empty? %>
+  $('#collapseThree .panel-body ul').html("<%= j render partial: 'events/sidebar', collection: @events %>");
+  Gmaps.store.handler.removeMarkers(Gmaps.store.markers);
+  Gmaps.store.markers = Gmaps.store.handler.addMarkers(<%= raw @hash.to_json %>, {
+    draggable: false,
+    animation: google.maps.Animation.DROP
+  });
+  Gmaps.store.handler.bounds.extendWith(Gmaps.store.markers);
+  Gmaps.store.handler.fitMapToBounds();
+<% else %>
+  $('#collapseThree .panel-body ul').html("<p class='empty'>Nothing seems to be going on here...</p>");
+  Gmaps.store.handler.removeMarkers(Gmaps.store.markers);
+  Gmaps.store.userPin.panTo();
+<% end %>
+
+$('#collapseThree').collapse('show');

@@ -6,8 +6,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       sign_in @user
-      flash[:success] = 'User created'
-      redirect_back_or root_url
+      flash.now[:success] = "Welcome to Palendar, #{@user.first_name}"
+      respond_with(@user)
     else
       render 'users/new'
     end
@@ -27,9 +27,36 @@ class UsersController < ApplicationController
     render json: @users.where("name like ?", "%#{params[:q]}%").reject{ |u| u.id == current_user.id }
   end
 
+  def history
+    @events = current_user.attended_events.where('finish < ?', Date.today.end_of_day).reorder(start: :desc)
+    @hash = Gmaps4rails.build_markers(@events) do |event, marker|
+      marker.lat event.lat
+      marker.lng event.lng
+      marker.title "#{pluralize(event.attendees.size, 'person')} going"
+      marker.infowindow render_to_string(partial: '/events/infobox', 
+                                         locals: {object: event})
+      marker.picture({
+        anchor: [10,34],
+        url: '/assets/purple_marker.png',
+        width: 20,
+        height: 34 })
+      marker.shadow({
+        anchor: [2,22],
+        url: '/assets/sprite_shadow.png',
+        width: 29,
+        height: 22 })
+    end
+    respond_with(@events, @hash)
+  end
+
   def index
     @pals = (current_user.sharers + current_user.sharees).uniq
     respond_with(@pals)
+  end
+
+  def invite
+    @users = current_user.sharees
+    render json: @users.where("name like ?", "%#{params[:q]}%")
   end
 
   def new
@@ -47,7 +74,21 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @events = @user.attended_events
+    @events = []
+    if current_user?(@user)
+      @events += @user.attended_events.where('finish > ?', Date.today.beginning_of_day)
+    else
+      # public events of your pals
+      @events += @user.attended_events.where('finish > ?', Date.today.beginning_of_day)
+                                     .where(:private => false)
+      # private events of your pals where you were also invited
+      @events += (@user.attended_events.where('finish > ?', Date.today.beginning_of_day)
+                  .where(:private => true) & 
+                  current_user.invited_events.where('finish > ?', Date.today.beginning_of_day)
+                  .where(:private => true)
+                 )   
+    end
+    @events.uniq!
     @hash = Gmaps4rails.build_markers(@events) do |event, marker|
       marker.lat event.lat
       marker.lng event.lng

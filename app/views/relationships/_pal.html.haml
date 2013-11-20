@@ -6,5 +6,5 @@
       = f.submit 'Sharing', class: 'btn btn-success', id: 'share_button'
   - else
     = form_for(Relationship.new, html: {class: 'pull-right', remote: true}) do |f| 
-      = hidden_field_tag :user_share, pal.id
+      = hidden_field_tag :users, pal.id
       = f.submit 'Share', class: 'btn btn-info'

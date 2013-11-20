@@ -1,0 +1,39 @@
+%h2 Palbum
+#carousel-palbum.carousel.slide{data: {ride: 'carousel'}}
+  /-- Wrapper for slides
+  .carousel-inner
+    -if !@images.empty?
+      = render @images
+    -else
+      .item.active
+        = image_tag 'placeholder.png', alt: 'Image placeholder', style: 'min-width: 100%;'
+        .carousel-caption
+          Upload images for this event
+
+  /-- Controls
+  %a.left.carousel-control{href: '#carousel-palbum', 'data-slide' => 'prev'}
+    %span.glyphicon.glyphicon-chevron-left
+  %a.right.carousel-control{href: '#carousel-palbum', 'data-slide' => 'next'}
+    %span.glyphicon.glyphicon-chevron-right
+
+/-- Indicators
+.carousel-previews
+
+  = s3_uploader_form post: event_images_url(@event), as: "image[image_url]" do 
+    .fileinput.fileinput-new{data: {provides: 'fileinput'}}
+      .fileinput-new.thumbnail{style: 'max-width: 200px; max-height: 150px;'}
+        = image_tag 'placeholder.png', style: 'max-height: 140px;'
+      .fileinput-preview.fileinput-exists.thumbnail{style: 'max-width: 200px; max-height: 150px'}
+      %div
+        - if signed_in?
+          %span.btn.btn-info.btn-file
+            %span.fileinput-new Select image
+            %span.fileinput-exists Change
+            = file_field_tag :file, multiple: true
+          = link_to 'Remove', '#', class: 'btn btn-danger fileinput-exists', data: {dismiss: 'fileinput'}
+        - else
+          = link_to 'Select image', signin_path, class: 'btn btn-info', remote: true
+  %script{id: 'template-upload', type: 'text/x-tmpl'}
+    .thumbnail.preview{style: 'max-width: 200px; max-height: 150px;'}
+      = image_tag 'loading.gif', style: 'max-height: 140px;'
+  = render(partial: 'images/preview', collection: @images)

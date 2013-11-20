@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/anjlab/bootstrap-rails.git
-  revision: 3707d98b1f27bec87b1dd6de7129e3f52a72e413
+  revision: 271f73becbb2aea9c1b771e09419b9bc0287fe55
   specs:
     anjlab-bootstrap-rails (3.0.2.0)
       railties (>= 3.0)
@@ -33,6 +33,7 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
+    addressable (2.3.5)
     annotate (2.5.0)
       rake
     arel (4.0.1)
@@ -51,7 +52,9 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.3-x86-mingw32)
     execjs (2.0.2)
-    gmaps4rails (2.0.5)
+    fastimage (1.5.4)
+      addressable (~> 2.3, >= 2.3.5)
+    gmaps4rails (2.1.0)
     haml (4.0.4)
       tilt
     hike (1.2.3)
@@ -65,6 +68,8 @@ GEM
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.1.0)
+      railties (>= 3.1.0)
     json (1.8.1)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -137,7 +142,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbolinks (1.3.0)
+    turbolinks (1.3.1)
       coffee-rails
     tzinfo (0.3.38)
     uglifier (2.3.1)
@@ -153,11 +158,13 @@ DEPENDENCIES
   bcrypt-ruby (~> 3.1.2)
   chronic
   coffee-rails (~> 4.0.0)
+  fastimage
   gmaps4rails
   haml
   httparty
   jbuilder (~> 1.2)
   jquery-rails
+  jquery-ui-rails
   meta-tags
   pg
   public_activity (~> 1.4.0)

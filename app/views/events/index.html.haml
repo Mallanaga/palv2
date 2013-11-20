@@ -9,6 +9,7 @@
           = link_to 'Find things to do', '#collapseOne', data: {toggle: 'collapse', parent: '#accordion'}
       #collapseOne.panel-collapse.collapse
         .panel-body
+          = render 'layouts/errors'
           = form_tag find_events_path, class: 'input-group', method: 'get', remote: true do 
             = text_field_tag :location, nil, placeholder: 'Location', class: 'form-control'
             = hidden_field_tag :lat
@@ -43,26 +44,29 @@
       .panel.panel-default
         .panel-heading
           %h4.panel-title
-            = link_to 'Pals', '#collapseThree', data: {toggle: 'collapse', parent: '#accordion'}
+            = link_to 'Pals', pals_path, remote: true
             = link_to '', users_path, class: 'glyphicon glyphicon-search act-button', title: 'Pals', remote: true
+            = link_to '', notifications_path, class: 'glyphicon glyphicon-bell act-button', title: 'Notifications', remote: true
         #collapseThree.panel-collapse.collapse
           .panel-body
+            %ul
 
     .panel.panel-default
       .panel-heading
         %h4.panel-title
           - if signed_in?
-            = link_to current_user.first_name, current_user, remote: true
+            = link_to current_user.first_name, current_user, id: 'show_user_events', remote: true
             = link_to '', signout_path, class: 'glyphicon glyphicon-log-out act-button', title: 'Log Out'
             = link_to '', settings_path, class: 'glyphicon glyphicon-wrench act-button', title: 'Settings', remote: true
-            = link_to '', notifications_path, class: 'glyphicon glyphicon-bell act-button', title: 'Notifications', remote: true
+            = link_to '', history_path, class: 'glyphicon glyphicon-time act-button', title: 'History', remote: true
           - else
             = link_to 'Log in', '#collapseFour', data: {toggle: 'collapse', parent: '#accordion'}
       #collapseFour.panel-collapse.collapse
-        .panel-body
-          - if signed_in?
+        - if signed_in?
+          .panel-body
             %ul
-          - else
+        - else
+          .panel-body.lo
             = render('sessions/new')
 
 = content_tag 'div', id: 'eventWindow', data: {} do

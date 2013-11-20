@@ -4,8 +4,6 @@ jQuery ->
     Gmaps.store.handler.removeMarker Gmaps.store.eventPin if Gmaps.store.eventPin
     $(this).parent().fadeOut -> $(this).html('')
 
-  $('.input-daterange').datepicker
-
   $('.dateSearch').datepicker
     todayBtn: 'linked'
 
@@ -14,7 +12,7 @@ jQuery ->
 
   $(document).on 'focusout', '#collapseOne input#location', ->
     typeLocation(this, updateUserMarker)
-    
+
   $(document).on 'click', '#show_events_click', ->
     $('#collapseOne input.btn').click()
     $('#collapseTwo').collapse('show')
@@ -26,6 +24,12 @@ jQuery ->
     $(this).val('Unshare').removeClass('btn-success').addClass('btn-danger')
     .mouseleave ->
       $(this).val('Sharing').removeClass('btn-danger').addClass('btn-success')
+  
+  $(document).on 'mouseenter', 'input#go_button', ->
+    $(this).val('Nah...').removeClass('btn-success').addClass('btn-danger')
+    .mouseleave ->
+      $(this).val('Going').removeClass('btn-danger').addClass('btn-success')
+  
   #moves map to marker clicked + open infowindow
   $(document).on 'click', '#sideBar li.sb', ->
     Gmaps.store.markers[$(this).data('marker')].panTo()
@@ -47,7 +51,8 @@ jQuery ->
 mapSize = ->
   height = $(window).height()
   $('#map').css height: height
-  $('#eventWindow').css height: height*0.8
+  $('#eventWindow').css height: height-120
+  $('#sideBar .panel-body').css maxHeight: height*0.6
 
 @showMarkers = ->
   for marker in Gmaps.store.markers
@@ -56,18 +61,6 @@ mapSize = ->
 @hideMarkers = ->
   for marker in Gmaps.store.markers
     marker.hide()
-
-# push info to controller
-@findEvents = (date, ne, sw) ->
-  $.ajax(
-    dataType: 'script'
-    data:
-      date: date
-      ne: ne
-      sw: sw
-    type: 'GET'
-    url: '/find-events'
-  )
 
 # Update event form attributes with given coordinates
 updateEventForm = (latLng) ->
@@ -84,7 +77,6 @@ updateEventForm = (latLng) ->
 # event creation... add marker
 @updateEventMarker = (latLng) ->
   Gmaps.store.handler.removeMarkers Gmaps.store.markers
-  Gmaps.store.handler.removeMarker Gmaps.store.userPin
   Gmaps.store.handler.removeMarker Gmaps.store.eventPin if Gmaps.store.eventPin
   Gmaps.store.eventPin = Gmaps.store.handler.addMarker(
     { lat: latLng.lat()
@@ -110,7 +102,6 @@ updateEventForm = (latLng) ->
 
 # Update user form attributes with given coordinates
 updateUserForm = (latLng) ->
-  $('#collapseOne').collapse('show');
   revGeo = new google.maps.Geocoder()
   revGeo.geocode latLng: latLng, (results, status) ->
     if status is google.maps.GeocoderStatus.OK
@@ -147,9 +138,10 @@ updateUserForm = (latLng) ->
   # Listen to drag & drop
   google.maps.event.addListener Gmaps.store.userPin.getServiceObject(), "dragend", (event) ->
     updateUserForm event.latLng
+    $('#collapseOne').collapse('show');
 
 # event searching... find location, move map, set bounds, search bounds
-typeLocation = (input, marker_function)->
+@typeLocation = (input, marker_function)->
   if $(input).val()
     geocoder = new google.maps.Geocoder()
     address = $(input).val()

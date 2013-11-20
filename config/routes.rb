@@ -12,14 +12,22 @@ Gmaps::Application.routes.draw do
   get '/signout',             to: 'sessions#destroy', via: :delete
   get '/find-events',         to: 'events#find', as: :find_events
   get '/find-users',          to: 'users#find', as: :find_users
+  get '/invite-users',        to: 'users#invite'
   get '/notifications',       to: 'users#notifications'
   get '/settings',            to: 'users#settings'
+  get '/history',             to: 'users#history'
+  get '/pals',                to: 'events#pals'
+
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
-  resources :events
+  resources :events do
+    resources :images, shallow: true do
+      member { post :vote }
+    end
+  end
   resources :users do
     member do
       get :sharees, :sharers

@@ -1,5 +1,6 @@
-.errors
-  - flash.each do |key, value| 
-    %div{class: "alert #{flash_class(key)}"}
-      = button_tag('&times;'.html_safe, class: 'close', data: {dismiss: 'alert'}, 'aria-hidden' => 'true')
-      = value
+- flash.each do |key, value| 
+  .row.errors    
+    .col-md-10.col-md-offset-1
+      %div{class: "alert #{flash_class(key)}"}
+        = button_tag('&times;'.html_safe, class: 'close', data: {dismiss: 'alert'}, 'aria-hidden' => 'true')
+        = value

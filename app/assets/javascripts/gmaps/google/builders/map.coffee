@@ -22,8 +22,8 @@ class @Gmaps.Google.Builders.Map extends Gmaps.Objects.BaseBuilder
   default_options: ->
     {
       mapTypeId: @primitives().mapTypes('ROADMAP') # HYBRID, ROADMAP, SATELLITE, TERRAIN
-      center:    new(@primitives().latLng)(0, 0)
-      zoom:      8
+      center:    new(@primitives().latLng)(39.8282, -98.5795)
+      zoom:      5
       minZoom:   5
       maxZoom:   16
     }

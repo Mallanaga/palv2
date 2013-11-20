@@ -3,11 +3,8 @@ class RelationshipsController < ApplicationController
   respond_to :js
 
   def create
-    if params[:user_share]
-      @users = User.where(id: params[:user_share])
-    else
-      @users = Rails.env.development? ? User.where("id LIKE ?", "#{params[:users]}") : User.where("id ILIKE ?", "#{params[:users]}")
-    end
+    @users = User.where(id: params[:users].split(','))
+
     @users.each do |u|
       current_user.share!(u)
     end

@@ -1,3 +1,27 @@
 $("#createEventWindow").html("<%= j render partial: 'events/new' %>");
 
+$('.input-daterange').datepicker({
+  todayBtn: 'linked',
+  autoclose: true
+});
+
+$('.field_with_errors').parents('.form-group').addClass('has-error');
+
+$("input[type='radio']").on("change", function () {
+  if(this.value == 'true') {
+    $('.form-group#invite_block').show();
+  } else {
+    $('.form-group#invite_block').hide();
+  }
+});
+
+// invite users autocomplete
+$('#createEventWindow #invited_pals').tokenInput('/invite-users.json', {
+  theme: 'facebook',
+  preventDuplicates: true,
+  hintText: 'Select from your pals'
+});
+
+$('#eventWindow:visible').fadeOut();
+
 $('#createEventWindow:hidden').fadeIn();

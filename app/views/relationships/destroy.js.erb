@@ -1,7 +1,7 @@
-$('#collapseThree .panel-body').html("<%= j render partial: 'users/index' %>");
+$('#collapseThree .panel-body ul').html("<%= j render partial: 'users/index' %>");
 
 // find user autocomplete
-$('#collapseThree input#users').tokenInput('/find-users.json', {
+$('#collapseThree input#users.ti').tokenInput('/find-users.json', {
   theme: 'facebook',
   preventDuplicates: true,
   hintText: 'Search for pals, or type email addresses to invite people',

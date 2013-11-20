@@ -1,5 +1,4 @@
-%li.users
-  = link_to user.name, user
-  - if admin? && !current_user?(user)
-    |
-    = link_to 'delete', user, method: :delete, data: { confirm: 'You sure?' }
+- if signed_in?
+  = link_to user.name, user, class: 'list-group-item', remote: true
+- else
+  = link_to user.name, '#', class: 'list-group-item', remote: true

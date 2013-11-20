@@ -7,13 +7,22 @@ class EventsController < ApplicationController
   respond_to :html, :js
 
   def create
+    Time.zone = 'UTC'
+    Chronic.time_class = Time.zone
     params[:event][:user_id] = current_user.id
+    params[:event][:start] = Chronic.parse params[:event][:start]
+    params[:event][:finish] = Chronic.parse params[:event][:finish]
     params[:event][:finish] = params[:event][:start] if params[:event][:finish].blank?
     @event = current_user.events.build(event_params)
     if @event.save
-      current_user.invite!(@event) if @event.private?
+      if @event.private?
+        current_user.invite!(@event)
+        params[:invited].split(',').each do |id|
+          User.find(id).invite!(@event)
+        end
+      end
       current_user.attend!(@event)
-      flash[:success] = "'#{@event.name}' created"
+      flash.now[:success] = "'#{@event.name}' created"
       respond_with(@event)
     else
       render 'events/new'
@@ -23,7 +32,7 @@ class EventsController < ApplicationController
 
   def destroy
     Event.find(params[:id]).destroy
-    flash[:success] = 'Event destroyed'
+    flash[:notice] = 'Event destroyed'
   end
 
   def edit
@@ -31,14 +40,11 @@ class EventsController < ApplicationController
   end
 
   def find
-    @location = params[:location].blank? ? 'your area' : params[:location]
-    @ne = params[:ne]
-    @sw = params[:sw]
     date = params[:date].blank? ? Date.today : params[:date].to_date
-    days_events = Event.where(start: date.beginning_of_day .. date.end_of_day,
-                              finish: date.beginning_of_day .. date.end_of_day)
-    @events = days_events#.where(lat: @sw[0].to_f .. @ne[0].to_f,
-                         #       lng: @sw[1].to_f .. @ne[1].to_f)
+    range = signed_in? ? current_user.range : 10
+    days_events = Event.where("start <= ? AND finish >= ?", date.end_of_day,
+                              date.beginning_of_day).where(:private => false)
+    @events = days_events.locals(params[:lat], params[:lng], range)
     @hash = Gmaps4rails.build_markers(@events) do |event, marker|
       marker.lat event.lat
       marker.lng event.lng
@@ -46,13 +52,15 @@ class EventsController < ApplicationController
       marker.infowindow render_to_string(partial: '/events/infobox', 
                                          locals: {object: event})
     end
-    respond_with(@events, @hash, @location)
+    respond_with(@events, @hash)
   end
 
   def index
     date = Date.today
-    @events = Event.where(start: date.beginning_of_day.. date.end_of_day,
-                          finish: date.beginning_of_day.. date.end_of_day)
+    range = signed_in? ? current_user.range : 10
+    days_events = Event.where("start <= ? AND finish >= ?", date.end_of_day,
+                              date.beginning_of_day).where(:private => false)
+    @events = days_events.locals(params[:lat], params[:lng], range)
     @hash = Gmaps4rails.build_markers(@events) do |event, marker|
       marker.lat event.lat
       marker.lng event.lng
@@ -65,14 +73,68 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
-
     respond_with(@event)
+  end
+
+  def pals
+    @events = []
+    current_user.sharers.each do |u|
+      # public events of your pals
+      @events += u.attended_events.where('finish > ?', Date.today.beginning_of_day)
+                                  .where(:private => false)
+      # private events of your pals where you were also invited
+      @events += (u.attended_events.where('finish > ?', Date.today.beginning_of_day)
+                  .where(:private => true) & 
+                  current_user.invited_events.where('finish > ?', Date.today.beginning_of_day)
+                  .where(:private => true)
+                 )                  
+    end
+    @events.uniq!
+    @events.each do |e|
+      @events.delete(e) if (current_user.invited?(e) && !current_user.attending?(e))
+    end
+    @hash = Gmaps4rails.build_markers(@events) do |event, marker|
+      marker.lat event.lat
+      marker.lng event.lng
+      marker.title "#{pluralize(event.attendees.size, 'person')} going"
+      marker.infowindow render_to_string(partial: '/events/infobox', 
+                                         locals: {object: event})
+      marker.picture({
+        anchor: [10,34],
+        url: '/assets/lime_marker.png',
+        width: 20,
+        height: 34 })
+      marker.shadow({
+        anchor: [2,22],
+        url: '/assets/sprite_shadow.png',
+        width: 29,
+        height: 22 })
+    end
+    @events += (current_user.invited_events - current_user.attended_events)
+    @hash += Gmaps4rails.build_markers(current_user.invited_events - current_user.attended_events) do |event, marker|
+      marker.lat event.lat
+      marker.lng event.lng
+      marker.title "#{pluralize(event.attendees.size, 'person')} going"
+      marker.infowindow render_to_string(partial: '/events/infobox', 
+                                         locals: {object: event})
+      marker.picture({
+        anchor: [10,34],
+        url: '/assets/cyan_marker.png',
+        width: 20,
+        height: 34 })
+      marker.shadow({
+        anchor: [2,22],
+        url: '/assets/sprite_shadow.png',
+        width: 29,
+        height: 22 })
+    end
+    respond_with(@events, @hash)
   end
 
   def show
     @event = Event.find(params[:id])
-
-    respond_with(@event)
+    @images = @event.images
+    respond_with(@event, @images)
   end
 
   def update

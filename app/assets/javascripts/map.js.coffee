@@ -8,6 +8,14 @@ jQuery ->
         lat: position.coords.latitude
         lng: position.coords.longitude
       updateUserMarker userLocation
+      $.ajax(
+        dataType: 'script'
+        data:
+          lat: position.coords.latitude
+          lng: position.coords.longitude
+        type: 'GET'
+        url: '/find-events'
+      )
       
     positionError = (error) ->
       switch error.code
@@ -25,12 +33,6 @@ jQuery ->
       timeout: 5000
 
     navigator.geolocation.getCurrentPosition(positionSuccess, positionError, geoOptions)
-
-    Gmaps.store.markers = Gmaps.store.handler.addMarkers( $('#map').data('events'), 
-      draggable: false
-      flat: false
-      animation: google.maps.Animation.DROP
-    )
 
     Gmaps.store.circles = Gmaps.store.handler.addCircles(
     )

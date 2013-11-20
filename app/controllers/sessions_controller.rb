@@ -6,20 +6,21 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       sign_in user
       flash[:success] = "Welcome back, #{user.first_name}"
-      redirect_back_or root_url
+      respond_with()
     else
-      flash[:error] = 'Invalid email/password credentials'
-      redirect_back_or root_url
+      flash.now[:error] = 'Invalid email/password combination'
+      render 'sessions/new'
     end
   end
 
   def destroy
     sign_out
-    flash[:notice] = 'See you soon!'
+    flash[:notice] = 'Logged out successfully'
     redirect_to root_url
   end
 
   def new
     respond_with()
   end
+
 end

@@ -4,7 +4,12 @@ class AttendancesController < ApplicationController
 
   def create
     @event = Event.find(params[:attendance][:event_id])
-    current_user.attend!(@event)
+    if @event.private?
+      current_user.attend!(@event) if current_user.invited?(@event)
+    else
+      current_user.attend!(@event)
+    end
+    
     respond_with(@event)
   end
 
@@ -13,4 +18,5 @@ class AttendancesController < ApplicationController
     current_user.not_attending!(@event)
     respond_with(@event)
   end
+
 end

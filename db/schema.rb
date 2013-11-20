@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131113011727) do
+ActiveRecord::Schema.define(version: 20131119020842) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -60,6 +60,18 @@ ActiveRecord::Schema.define(version: 20131113011727) do
   add_index "events", ["name"], name: "index_events_on_name"
   add_index "events", ["start"], name: "index_events_on_start"
 
+  create_table "images", force: true do |t|
+    t.integer  "event_id"
+    t.integer  "user_id"
+    t.text     "description"
+    t.string   "image_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "images", ["event_id"], name: "index_images_on_event_id"
+  add_index "images", ["user_id"], name: "index_images_on_user_id"
+
   create_table "invites", force: true do |t|
     t.integer  "user_id"
     t.integer  "event_id"
@@ -93,6 +105,7 @@ ActiveRecord::Schema.define(version: 20131113011727) do
     t.datetime "password_reset_sent_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "range",                  default: 10
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

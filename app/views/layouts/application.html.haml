@@ -16,7 +16,6 @@
   %body
     .wrapper
       = render 'layouts/header'
-      = render 'layouts/errors'
       = yield
       - if Rails.env.development?
         #debug

@@ -16,4 +16,9 @@
     opacity: 0.5;
     filter: alpha(opacity=50);
   }
+  &.refresh {
+    z-index: 99;
+    font-size: 19px;
+    top: 1px;
+  }
 }

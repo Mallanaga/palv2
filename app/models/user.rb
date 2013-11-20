@@ -22,12 +22,14 @@
 class User < ActiveRecord::Base
   has_secure_password validations: false
 
+  has_many :images
+
   has_many :invites, dependent: :destroy
   has_many :invited_events, through: :invites, source: :event
   
   has_many :events
 
-  has_many :attendances, -> { where cancel: false }, dependent: :destroy                     
+  has_many :attendances, dependent: :destroy                     
   has_many :attended_events, -> { where "attendances.cancel" => false },
                              through: :attendances, source: :event
 
@@ -65,28 +67,28 @@ class User < ActiveRecord::Base
       
   # invites
   def invited? (event)
-    self.invites.find_by_event_id(event.id)
+    !self.invited_events.where(id: event.id).empty?
   end
   def invite! (event)
     self.invites.create!(event_id: event.id)
   end
   def uninvite! (event)
-    self.invites.find_by_event_id(event.id).destroy
+    self.invites.where(event_id: event.id).destroy
   end
 
   # attendances
   def attending? (event)
-    self.attendances.find_by_event_id(event.id)
+    !self.attended_events.where(id: event.id).empty?
   end
   def attend! (event)
-    if attd = self.attendances.find_by_event_id(event.id)
-      attd.update_attribute(:cancel, false)
+    if attd = self.attendances.where(event_id: event.id)[0]
+      attd.update_attributes(cancel: false)
     else
       self.attendances.create!(event_id: event.id, iCalUID: "#{SecureRandom.uuid.split('-')[4]}@palendar")
     end
   end
   def not_attending! (event)
-    self.attendances.find_by_event_id(event.id).update_attribute(:cancel, true)
+    self.attendances.where(event_id: event.id)[0].update_attributes(cancel: true)
   end
 
   # Check to see if @user is sharing with current user
