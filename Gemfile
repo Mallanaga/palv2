@@ -6,7 +6,6 @@ gem 'rails', '4.0.1'
 gem 'bcrypt-ruby', '~> 3.1.2' # Use ActiveModel has_secure_password
 gem 'chronic'
 gem 'gmaps4rails'
-gem 'httparty'
 gem 'rails_autolink'
 gem 'public_activity', '~> 1.4.0'
 gem 'thin' # Use thin as the app server
@@ -22,7 +21,6 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'haml'
-gem 'fastimage'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'

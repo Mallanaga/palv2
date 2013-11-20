@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   include ActionView::Helpers::TextHelper
+  require 'open-uri'
 
   before_filter :admin_user,     only: [:destroy]
   before_filter :correct_user,   only: [:edit, :update]
@@ -7,7 +8,7 @@ class EventsController < ApplicationController
   respond_to :html, :js
 
   def create
-    Time.zone = 'UTC'
+    Time.zone = Time.zone = JSON.load(open("https://maps.googleapis.com/maps/api/timezone/json?location=#{params[:event][:lat]},#{params[:event][:lng]}&timestamp=1331161200&sensor=false"))["timeZoneId"]
     Chronic.time_class = Time.zone
     params[:event][:user_id] = current_user.id
     params[:event][:start] = Chronic.parse params[:event][:start]
@@ -40,7 +41,8 @@ class EventsController < ApplicationController
   end
 
   def find
-    date = params[:date].blank? ? Date.today : params[:date].to_date
+    Time.zone = JSON.load(open("https://maps.googleapis.com/maps/api/timezone/json?location=#{params[:lat]},#{params[:lng]}&timestamp=1331161200&sensor=false"))["timeZoneId"]
+    date = !params[:date].blank? ? params[:date].to_date : Date.today
     range = signed_in? ? current_user.range : 10
     days_events = Event.where("start <= ? AND finish >= ?", date.end_of_day,
                               date.beginning_of_day).where(:private => false)
@@ -56,19 +58,7 @@ class EventsController < ApplicationController
   end
 
   def index
-    date = Date.today
-    range = signed_in? ? current_user.range : 10
-    days_events = Event.where("start <= ? AND finish >= ?", date.end_of_day,
-                              date.beginning_of_day).where(:private => false)
-    @events = days_events.locals(params[:lat], params[:lng], range)
-    @hash = Gmaps4rails.build_markers(@events) do |event, marker|
-      marker.lat event.lat
-      marker.lng event.lng
-      marker.title "#{pluralize(event.attendees.size, 'person')} going"
-      marker.infowindow render_to_string(partial: '/events/infobox', 
-                                         locals: {object: event}) 
-    end
-    respond_with(@events, @hash)
+    @events = []
   end
 
   def new
@@ -101,12 +91,12 @@ class EventsController < ApplicationController
                                          locals: {object: event})
       marker.picture({
         anchor: [10,34],
-        url: '/lime_marker.png',
+        url: ActionController::Base.helpers.asset_path('lime_marker.png'),
         width: 20,
         height: 34 })
       marker.shadow({
         anchor: [2,22],
-        url: '/sprite_shadow.png',
+        url: ActionController::Base.helpers.asset_path('sprite_shadow.png'),
         width: 29,
         height: 22 })
     end
@@ -119,12 +109,12 @@ class EventsController < ApplicationController
                                          locals: {object: event})
       marker.picture({
         anchor: [10,34],
-        url: '/cyan_marker.png',
+        url: ActionController::Base.helpers.asset_path('cyan_marker.png'),
         width: 20,
         height: 34 })
       marker.shadow({
         anchor: [2,22],
-        url: '/sprite_shadow.png',
+        url: ActionController::Base.helpers.asset_path('/sprite_shadow.png'),
         width: 29,
         height: 22 })
     end
