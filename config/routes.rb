@@ -37,6 +37,7 @@ Gmaps::Application.routes.draw do
   resources :relationships,     only: [:create, :destroy]
   resources :attendances,       only: [:create, :destroy]
   resources :invites,           only: [:create, :destroy]
+  resources :comments,          only: [:create, :destroy, :update]
 
   # Example resource route with options:
   #   resources :products do

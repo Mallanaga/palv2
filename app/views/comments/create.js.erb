@@ -1,7 +1,1 @@
-if ($('h2.date').is(":contains('Your upcoming events')")) {
-  personal_search();
-}else if ($('h2.date').is(":contains('Pal's upcoming events')")) {
-  pals_search();
-}else {
-  search();
-}
+$('#eventWindow #comments').html("<%= j render partial: 'comments/comment' %>");

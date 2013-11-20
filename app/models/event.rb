@@ -18,6 +18,8 @@
 
 class Event < ActiveRecord::Base
   has_many :images
+
+  has_many :comments
   
   has_many :invites, dependent: :destroy
   has_many :invitees, through: :invites, source: :user

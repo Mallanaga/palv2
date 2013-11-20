@@ -1,3 +1,23 @@
 %h4 Comments
-= form_tag do
-  =text_area_tag :comment, nil, class: 'form-control'
+- if signed_in? && current_user.attending?(@event)
+  = form_for Comment.new, remote: true do |f| 
+    .form-group
+      = f.hidden_field :event_id, value: @event.id
+      = f.label :comment, "#{current_user.first_name}", class: 'control-label'
+      = f.text_area :comment, class: 'form-control'
+    = f.submit "Comment", class: 'btn btn-primary pull-right'
+%br
+%br
+%br
+-if @event.comments.any?
+  %ol.list-group
+    - @event.comments.each do |comment| 
+      %li.list-group-item
+        %h4.list-group-item-heading
+          = comment.user.first_name
+          %small
+            posted 
+            = time_ago_in_words(comment.created_at)
+            ago
+        %p.list-group-item-text= comment.comment 
+
