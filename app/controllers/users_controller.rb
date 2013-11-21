@@ -24,7 +24,8 @@ class UsersController < ApplicationController
 
   def find
     @users = User.where.not(id: current_user.id).order(:name)
-    render json: @users.where("name like ?", "%#{params[:q]}%")
+    @users = Rails.env.development? ? @users.where("name like ?", "%#{params[:q]}%") : @users.where("name ilike ?", "%#{params[:q]}%")
+    render json: @users
   end
 
   def history
@@ -56,7 +57,8 @@ class UsersController < ApplicationController
 
   def invite
     @users = current_user.sharees
-    render json: @users.where("name like ?", "%#{params[:q]}%")
+    @users = Rails.env.development? ? @users.where("name like ?", "%#{params[:q]}%") : @users.where("name ilike ?", "%#{params[:q]}%")
+    render json: @users
   end
 
   def new
