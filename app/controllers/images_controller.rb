@@ -8,7 +8,6 @@ class ImagesController < ApplicationController
     @image = @event.images.build(image_params)
     if @image.save
       @images = @event.images
-      flash[:success] = 'Image added'
       respond_with(@image, @images, @event)
     else
       flash[:error] = 'Invalid image'
@@ -28,8 +27,7 @@ class ImagesController < ApplicationController
   end
 
   def index
-    @event = Event.find(params[:event_id])
-    @images = @event.images
+
   end
 
   def show

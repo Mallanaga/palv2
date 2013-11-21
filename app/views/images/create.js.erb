@@ -1,7 +1,8 @@
 <% if @image.new_record? %>
   alert("Failed to upload image: <%= j @image.errors.full_messages.join(', ').html_safe %>");
 <% else %>
-  $('#eventWindow #palbum').html("<%= j render partial: 'events/palbum' %>");
+  $('#eventWindow .carousel-inner').append("<%= j render 'big', big: @image %>");
+  $('#eventWindow .carousel-previews').append("<%= j render 'little', little: @image %>");
 <% end %>
 
 $('#fileupload').fileupload({
