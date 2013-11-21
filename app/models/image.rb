@@ -2,6 +2,10 @@ class Image < ActiveRecord::Base
   belongs_to :user
   belongs_to :event
 
+  def taken_by? (photographer)
+    self.user == photographer
+  end
+
   def self.by_votes
     select('images.*, coalesce(value, 0) as votes').
     joins('left join image_votes on image_id=images.id').

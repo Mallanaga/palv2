@@ -17,9 +17,10 @@ class ImagesController < ApplicationController
 
   def destroy
     @image = Image.find(params[:id])
-    event = @image.event
-    @image.destroy
-    redirect_to album_images_url(event), notice: 'Image destroyed'
+    @event = @image.event
+    @image.update_attributes(event: nil)
+    @images = @event.images
+    respond_with(@event, @images)
   end
 
   def edit
@@ -37,7 +38,7 @@ class ImagesController < ApplicationController
   def update
     @image = Image.find(params[:id])
     @event = Event.find(@image.event)
-    if @image.update_attributes(params[:image])
+    if @image.update_attributes(image_params)
       redirect_to event_images_url(@event), notice: "Image was successfully updated."
     else
       render :edit

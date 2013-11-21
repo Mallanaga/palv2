@@ -1,0 +1,57 @@
+$('#eventWindow #palbum').html("<%= j render partial: 'events/palbum' %>");
+
+$('#fileupload').fileupload({
+  add: function(e, data) {
+    var file, types;
+    types = /(\.|\/)(gif|jpe?g|png)$/i;
+    file = data.files[0];
+    if (types.test(file.type) || types.test(file.name)) {
+      data.context = $(tmpl("template-upload", file));
+      $('#fileupload').append(data.context);
+      return data.submit();
+    } else {
+      return alert("" + file.name + " is not a gif, jpeg, or png image file");
+    }
+  },
+  done: function(e, data) {
+    var content, domain, file, path, to;
+    file = data.files[0];
+    domain = $('#fileupload').attr('action');
+    path = $('#fileupload input[name=key]').val().replace('${filename}', file.name);
+    to = $('#fileupload').data('post');
+    content = {};
+    content[$('#fileupload').data('as')] = domain + path;
+    $.post(to, content);
+    if (data.context) {
+      return data.context.remove();
+    }
+  },
+  fail: function(e, data) {
+    alert("" + data.files[0].name + " failed to upload.");
+    console.log("Upload failed:");
+    return console.log(data);
+  }
+});
+
+$(document).one('mouseenter', '.carousel-previews', function() {
+  var $gal, damp, galSW, galW, mPadd, mX, mX2, mmAA, mmAAr, posX, wDiff;
+  $gal = $('.carousel-previews');
+  galW = $gal.outerWidth(true);
+  galSW = $gal[0].scrollWidth;
+  wDiff = (galSW / galW) - 1;
+  mPadd = 60;
+  damp = 20;
+  mX = 0;
+  mX2 = 0;
+  posX = 0;
+  mmAA = galW - (mPadd * 2);
+  mmAAr = galW / mmAA;
+  $(document).on('mousemove', '.carousel-previews', function(e) {
+    mX = e.pageX - $(this).parent().offset().left - this.offsetLeft;
+    return mX2 = Math.min(Math.max(0, mX - mPadd), mmAA) * mmAAr;
+  });
+  return setInterval((function() {
+    posX += (mX2 - posX) / damp;
+    return $gal.scrollLeft(posX * wDiff);
+  }), 10);
+});
