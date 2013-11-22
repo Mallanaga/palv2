@@ -1,6 +1,6 @@
 $('#collapseFour .panel-body').html("<%= j render partial: 'sessions/new' %>");
 
-<% if !flash.empty? %>
+<% if flash.any? %>
   $('.form-group').addClass('has-error');
 <% end %>
 

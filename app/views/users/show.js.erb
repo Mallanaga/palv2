@@ -1,4 +1,4 @@
-<% if !@events.empty? %>
+<% if @events.any? %>
   $('#collapseFour ul').html("<%= j render partial: 'events/sidebar', collection: @events %>");
   Gmaps.store.handler.removeMarkers(Gmaps.store.markers);
   Gmaps.store.markers = Gmaps.store.handler.addMarkers(<%= raw @hash.to_json %>, {

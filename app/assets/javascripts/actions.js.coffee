@@ -7,13 +7,49 @@ jQuery ->
   $(document).on 'focusout', '#createEventWindow #event_location', ->
     typeLocation(this, updateEventMarker)
 
-  $(document).on 'focusout', '#collapseOne input#location', ->
-    typeLocation(this, updateUserMarker)
-
   $(document).on 'click', '#show_events_click', ->
-    $('#collapseOne input.btn').click()
-    $('#collapseTwo').collapse('show')
+    $('#collapseOne form').submit()
 
+  #this is gross... but it works.
+  $('#collapseOne form').submit (e) ->
+    no
+    if $('#collapseOne form #location').val().length > 0
+      geocoder = new google.maps.Geocoder()
+      address = $('#collapseOne form #location').val()
+      geocoder.geocode address: address, (results, status) ->
+        if status is google.maps.GeocoderStatus.OK
+          latLng = results[0].geometry.location
+          updateUserForm(latLng)
+          $.ajax(
+            dataType: 'script'
+            data:
+              lat: latLng.lat()
+              lng: latLng.lng()
+              date: $('#collapseOne form #date').val()
+            type: 'GET'
+            url: '/find-events'
+          )
+          Gmaps.store.handler.removeMarker Gmaps.store.userPin if Gmaps.store.userPin
+          Gmaps.store.userPin = Gmaps.store.handler.addMarker(
+            { lat: latLng.lat()
+            lng: latLng.lng()
+            marker_title: 'Your Location... Drag me!'
+            picture: 
+              anchor: [10,34]
+              url: image_path('purple_marker.png')
+              width: 20
+              height: 34
+            shadow:
+              anchor: [2,22]
+              url: image_path('sprite_shadow.png')
+              width: 29
+              height: 22 },
+            { draggable: true
+            animation: google.maps.Animation.BOUNCE }
+          )
+        else
+          throw status + ' for ' + address
+      
   $('#accordion').on 'show.bs.collapse', ->
     $('#accordion .in').collapse('hide')
 

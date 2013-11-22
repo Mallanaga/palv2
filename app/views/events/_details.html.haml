@@ -1,3 +1,5 @@
+- if @event.user == current_user && @event.attendees.size < 2
+  = link_to '', @event, method: :delete, data: { confirm: "You're sure you want to DELETE this event?" }, class: 'glyphicon glyphicon-remove remove-button', remote: true, title: 'Delete event'
 %h2= @event.name
 %h3= best_in_place @event, :start, type: :date
 %h4= best_in_place @event, :description, nil: 'Event description'

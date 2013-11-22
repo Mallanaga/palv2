@@ -12,7 +12,7 @@
 class Invite < ActiveRecord::Base
   include PublicActivity::Common
   
-  belongs_to :event, dependent: :destroy
+  belongs_to :event
   belongs_to :user
   
   validates :event_id, presence: true

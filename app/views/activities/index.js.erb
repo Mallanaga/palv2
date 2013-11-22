@@ -1,3 +1,7 @@
-$('#collapseThree ul').html("<%= j render partial: 'activities/index' %>");
+<% if @activities.any? %>
+  $('#collapseThree ul').html("<%= j render partial: 'activities/index' %>");
+<% else %>
+  $('#collapseThree ul').html("<ol class='list-group'><li class='list-group-item'>Nothing new...</li></ol>");
+<% end %>
 
 $('#collapseThree').collapse('show');

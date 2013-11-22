@@ -1,5 +1,5 @@
 class ImagesController < ApplicationController
-  before_filter :correct_user,      only: [:update, :delete]
+  before_filter :correct_user,      only: [:update, :destroy]
   respond_to :js, :json
 
   def create

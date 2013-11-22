@@ -2,8 +2,7 @@ class EventsController < ApplicationController
   include ActionView::Helpers::TextHelper
   require 'open-uri'
 
-  before_filter :admin_user,     only: [:destroy]
-  before_filter :correct_user,   only: [:edit, :update]
+  before_filter :correct_user,   only: [:update, :destroy]
   before_filter :signed_in_user, only: [:create, :destroy, :edit, :new, :update]
   respond_to :html, :js, :json
 
@@ -40,8 +39,8 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    Event.find(params[:id]).destroy
-    flash[:notice] = 'Event destroyed'
+    @event = Event.find(params[:id]).destroy
+    respond_with()
   end
 
   def edit
@@ -141,13 +140,10 @@ class EventsController < ApplicationController
   end
 
   private
-    def admin_user
-      redirect_to root_path unless admin?
-    end
 
     def correct_user
-      @user = User.find(params[:id])
-      redirect_to root_path unless current_user?(@user) || admin?
+      @user = Event.find(params[:id]).user
+      redirect_to(root_path) unless current_user?(@user)
     end
 
     def event_params
