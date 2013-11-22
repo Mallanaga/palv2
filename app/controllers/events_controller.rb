@@ -77,12 +77,12 @@ class EventsController < ApplicationController
     @events = []
     current_user.sharers.each do |u|
       # public events of your pals
-      @events += u.attended_events.where('finish > ?', Date.today.beginning_of_day)
+      @events += u.attended_events.where('finish > ?', Date.current.beginning_of_day)
                                   .where(:private => false)
       # private events of your pals where you were also invited
-      @events += (u.attended_events.where('finish > ?', Date.today.beginning_of_day)
+      @events += (u.attended_events.where('finish > ?', Date.current.beginning_of_day)
                   .where(:private => true) & 
-                  current_user.invited_events.where('finish > ?', Date.today.beginning_of_day)
+                  current_user.invited_events.where('finish > ?', Date.current.beginning_of_day)
                   .where(:private => true)
                  )                  
     end

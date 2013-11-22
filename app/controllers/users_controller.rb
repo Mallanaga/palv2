@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   end
 
   def history
-    @events = current_user.attended_events.where('finish < ?', Date.today.end_of_day).reorder(start: :desc)
+    @events = current_user.attended_events.where('finish < ?', Date.current.end_of_day).reorder(start: :desc)
     @hash = Gmaps4rails.build_markers(@events) do |event, marker|
       marker.lat event.lat
       marker.lng event.lng
@@ -78,15 +78,15 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @events = []
     if current_user?(@user)
-      @events += @user.attended_events.where('finish > ?', Date.today.beginning_of_day)
+      @events += @user.attended_events.where('finish > ?', Date.current.beginning_of_day)
     else
       # public events of your pals
-      @events += @user.attended_events.where('finish > ?', Date.today.beginning_of_day)
+      @events += @user.attended_events.where('finish > ?', Date.current.beginning_of_day)
                                      .where(:private => false)
       # private events of your pals where you were also invited
-      @events += (@user.attended_events.where('finish > ?', Date.today.beginning_of_day)
+      @events += (@user.attended_events.where('finish > ?', Date.current.beginning_of_day)
                   .where(:private => true) & 
-                  current_user.invited_events.where('finish > ?', Date.today.beginning_of_day)
+                  current_user.invited_events.where('finish > ?', Date.current.beginning_of_day)
                   .where(:private => true)
                  )   
     end
