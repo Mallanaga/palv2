@@ -6,10 +6,8 @@
       = f.label :comment, current_user.first_name, class: 'control-label'
       = f.text_area :comment, class: 'form-control'
     .form-group
-      = f.submit 'Comment', class: 'btn btn-primary pull-right'
-%br
-%br
-%br
+      = f.submit 'Comment', class: 'btn btn-danger pull-right'
+
 -if @event.comments.any?
   %ol.list-group
     - @event.comments.each do |comment| 

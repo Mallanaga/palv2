@@ -1,14 +1,14 @@
 - if image_counter == 0
   .item.active
-    -if image.taken_by? (current_user)
-      = link_to '', image, method: :delete, data: { confirm: "You're sure you want to remove this image from the event?" }, class: 'glyphicon glyphicon-remove remove-button', remote: true, title: 'Remove image'
+    -if image.taken_by? (current_user) || admin?
+      = link_to '', image, method: :delete, data: { confirm: "You're sure you want to REMOVE this image from the event?" }, class: 'glyphicon glyphicon-remove remove-button', remote: true, title: 'Remove image'
     = image_tag image.image_url, alt: "#{image.user.first_name}'s image"
     .carousel-caption
-      = image.description
+      = best_in_place image, :description, nil: 'Image desription'
 - else
   .item
-    -if image.taken_by? (current_user)
-      = link_to '', image, method: :delete, data: { confirm: "You're sure you want to remove this image from the event?" }, class: 'glyphicon glyphicon-remove remove-button', remote: true, title: 'Remove image'
+    -if image.taken_by? (current_user) || admin?
+      = link_to '', image, method: :delete, data: { confirm: "You're sure you want to REMOVE this image from the event?" }, class: 'glyphicon glyphicon-remove remove-button', remote: true, title: 'Remove image'
     = image_tag image.image_url, alt: "#{image.user.first_name}'s image"
     .carousel-caption
-      = image.description
+      = best_in_place image, :description, nil: 'Image desription'

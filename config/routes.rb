@@ -13,7 +13,7 @@ Gmaps::Application.routes.draw do
   get '/find-events',         to: 'events#find', as: :find_events
   get '/find-users',          to: 'users#find', as: :find_users
   get '/invite-users',        to: 'users#invite'
-  get '/notifications',       to: 'users#notifications'
+  get '/notifications',       to: 'activities#index'
   get '/settings',            to: 'users#settings'
   get '/history',             to: 'users#history'
   get '/pals',                to: 'events#pals'

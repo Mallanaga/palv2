@@ -17,11 +17,20 @@ class EventsController < ApplicationController
     if @event.save
       if @event.private?
         current_user.invite!(@event)
-        params[:invited].split(',').each do |id|
-          User.find(id).invite!(@event)
+        current_user.attend!(@event)
+        params[:invited].split(',').each do |u|
+          u = User.find(u)
+          u.invite!(@event)
+          Invite.find_by_user_id_and_event_id(u.id, @event.id).create_activity :create, owner: current_user, recipient: u
+        end
+      else
+        current_user.attend!(@event)
+        current_user.sharees.each do |s|
+          if !s.attending?(@event)
+            Attendance.find_by_event_id_and_user_id(@event.id, current_user.id).create_activity :create, owner: current_user, recipient: s
+          end
         end
       end
-      current_user.attend!(@event)
       flash.now[:success] = "'#{@event.name}' created"
       respond_with(@event)
     else
@@ -112,7 +121,7 @@ class EventsController < ApplicationController
         height: 34 })
       marker.shadow({
         anchor: [2,22],
-        url: ActionController::Base.helpers.asset_path('/sprite_shadow.png'),
+        url: ActionController::Base.helpers.asset_path('sprite_shadow.png'),
         width: 29,
         height: 22 })
     end

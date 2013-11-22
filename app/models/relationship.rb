@@ -11,7 +11,6 @@
 
 class Relationship < ActiveRecord::Base
   include PublicActivity::Common
-  # tracked owner: ->(controller, model) { controller && controller.current_user }
   
   belongs_to :sharee, class_name: "User"
   belongs_to :sharer, class_name: "User"

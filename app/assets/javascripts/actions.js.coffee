@@ -29,12 +29,12 @@ jQuery ->
   
   $(document).on 'click', '#comment_comment', ->
     $('#comment_comment').keyup ->
-      $(this).val($(this).val().replace /^\s+|\s+$/g, "")
-      unless $(this).val().length < 10
-        $('#comments .btn-primary').attr 'disabled', false
+      $(this).val($(this).val().replace /^\s+/g, "")
+      unless $(this).val().length < 10 or $(this).val().length > 500
+        $('#comments :submit').attr('disabled', false).removeClass('btn-danger').addClass('btn-primary')
       else
-        $('#comments .btn-primary').attr 'disabled', true
-
+        $('#comments :submit').attr('disabled', true).removeClass('btn-primary').addClass('btn-danger')
+        
   #moves map to marker clicked + open infowindow
   $(document).on 'click', '#sideBar li.sb', ->
     Gmaps.store.markers[$(this).data('marker')].panTo()

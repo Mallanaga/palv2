@@ -4,9 +4,9 @@ class RelationshipsController < ApplicationController
 
   def create
     @users = User.where(id: params[:users].split(','))
-
     @users.each do |u|
       current_user.share!(u)
+      Relationship.find_by_sharee_id_and_sharer_id(u.id, current_user.id).create_activity :create, owner: current_user, recipient: u
     end
     @pals = (current_user.sharers + current_user.sharees).uniq
     respond_with(@pals, @users)

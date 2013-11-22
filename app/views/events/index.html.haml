@@ -61,7 +61,7 @@
             = render('sessions/new')
 
 = content_tag 'div', id: 'eventWindow', data: {} do
-  %span.glyphicon.glyphicon-remove.close
+  %a.glyphicon.glyphicon-remove.close{title: 'Close'}
 
 = content_tag 'div', id: 'createEventWindow', data: {} do
-  %span.glyphicon.glyphicon-remove.close
+  %a.glyphicon.glyphicon-remove.close{title: 'Close'}

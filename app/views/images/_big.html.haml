@@ -1,4 +1,6 @@
 .item
+  -if big.taken_by? (current_user) || admin?
+    = link_to '', big, method: :delete, data: { confirm: "You're sure you want to REMOVE this image from the event?" }, class: 'glyphicon glyphicon-remove remove-button', remote: true, title: 'Remove image'
   = image_tag big.image_url, alt: "#{big.user.first_name}'s image"
   .carousel-caption
-    = big.description
+    = best_in_place image, :description, nil: 'Image desription'

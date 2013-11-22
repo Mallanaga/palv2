@@ -1,2 +1,2 @@
-%p= link_to object.name, object, class: 'evtwin', remote: true
-%p= object.start.strftime("%-I:%M%P")
+%p= link_to object.name, object, remote: true
+%p= object.start.strftime("%B #{object.start.day.ordinalize}")

@@ -93,6 +93,21 @@ h1, h2, h3 {
   }
 
   #collapseThree {
+    .list-group {
+      margin-bottom: 0px;
+      .list-group-item {
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        background-color: transparent;
+        &:hover {
+          background: white;
+        }
+        &:last-child {
+          border: none;
+        }
+      }
+    }
     .panel-body {
       padding: 0px;
       form.add-pals {
@@ -165,8 +180,13 @@ h1, h2, h3 {
   border: 1px #ddd solid;
   @include border-radius( 5px );
   @include box-shadow( 2px 2px 4px rgba(0,0,0,.4) );
-  textarea { 
-    resize: vertical;
+  #comments{
+    form {
+      margin-bottom: 65px;
+    }
+    textarea { 
+      resize: vertical;
+    }
   }
   .scroll {
     margin-top: 10px;

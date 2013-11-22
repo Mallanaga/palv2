@@ -1,6 +1,4 @@
 class Comment < ActiveRecord::Base
-  include PublicActivity::Common
-
   belongs_to :event
   belongs_to :user
 

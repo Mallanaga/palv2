@@ -1,0 +1,11 @@
+- @activities.each do |activity| 
+  .list-group
+    -if activity.trackable_type == 'Relationship'
+      = link_to activity.trackable.sharer, class: 'list-group-item', remote: true do
+        %b
+          = activity.owner.first_name if activity.owner
+        = render_activity activity
+    - else 
+      = link_to activity.trackable.event, class: 'list-group-item', remote: true do
+        = activity.owner.first_name if activity.owner
+        = render_activity activity

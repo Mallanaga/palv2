@@ -1,6 +1,6 @@
 class ImagesController < ApplicationController
   before_filter :correct_user,      only: [:update, :delete]
-  respond_to :js
+  respond_to :js, :json
 
   def create
     @event = Event.find(params[:event_id])
@@ -37,12 +37,8 @@ class ImagesController < ApplicationController
 
   def update
     @image = Image.find(params[:id])
-    @event = Event.find(@image.event)
-    if @image.update_attributes(image_params)
-      redirect_to event_images_url(@event), notice: "Image was successfully updated."
-    else
-      render :edit
-    end
+    @image.update_attributes(image_params)
+    respond_with(@image)
   end
 
   def vote
