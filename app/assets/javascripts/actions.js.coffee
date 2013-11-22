@@ -47,6 +47,10 @@ jQuery ->
             { draggable: true
             animation: google.maps.Animation.BOUNCE }
           )
+          # Listen to drag & drop
+          google.maps.event.addListener Gmaps.store.userPin.getServiceObject(), "dragend", (event) ->
+            updateUserForm event.latLng
+            $('#collapseOne').collapse('show');
         else
           throw status + ' for ' + address
       
