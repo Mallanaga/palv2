@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   end
 
   def history
-    @events = current_user.attended_events.where('finish < ?', Date.current.end_of_day).reorder(start: :desc)
+    @events = current_user.attended_events.where('finish < ?', Date.current.beginning_of_day).reorder(start: :desc)
     @hash = Gmaps4rails.build_markers(@events) do |event, marker|
       marker.lat event.lat
       marker.lng event.lng
