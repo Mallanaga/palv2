@@ -10,49 +10,78 @@ jQuery ->
   $(document).on 'click', '#show_events_click', ->
     $('#collapseOne form').submit()
 
+  $(document).on 'click', '#collapseOne form #location', ->
+    $('#collapseOne form #location').keyup ->
+      if $(this).val().match(/^[#]/)
+        $('#collapseOne form #location').tokenInput '/categories.json', 
+          theme: 'facebook'
+          preventDuplicates: true
+          hintText: 'Search for events by tag'
+          defaultValue: '#'
+      else
+
+
   #this is gross... but it works.
   $('#collapseOne form').submit (e) ->
     no
-    if $('#collapseOne form #location').val().length > 0
-      geocoder = new google.maps.Geocoder()
-      address = $('#collapseOne form #location').val()
-      geocoder.geocode address: address, (results, status) ->
-        if status is google.maps.GeocoderStatus.OK
-          latLng = results[0].geometry.location
-          updateUserForm(latLng)
-          $.ajax(
-            dataType: 'script'
-            data:
-              lat: latLng.lat()
+    if $('#collapseOne form #location').val().length > 1
+      if $('#collapseOne form #location').val().match(/^[#]/)
+        #search tags
+        $.ajax(
+          dataType: 'script'
+          data:
+            tags: $('#collapseOne input#location').val()
+            lat: $('#collapseOne input#lat').val latLng.lat()
+            lng: $('#collapseOne input#lng').val latLng.lng()
+            date: $('#collapseOne form #date').val()
+          type: 'GET'
+          url: '/find-tags'
+        )
+        
+        no
+      else
+        #search location
+        geocoder = new google.maps.Geocoder()
+        address = $('#collapseOne form #location').val()
+        geocoder.geocode address: address, (results, status) ->
+          if status is google.maps.GeocoderStatus.OK
+            latLng = results[0].geometry.location
+            updateUserForm(latLng)
+            $.ajax(
+              dataType: 'script'
+              data:
+                lat: latLng.lat()
+                lng: latLng.lng()
+                date: $('#collapseOne form #date').val()
+              type: 'GET'
+              url: '/find-events'
+            )
+            Gmaps.store.handler.removeMarker Gmaps.store.userPin if Gmaps.store.userPin
+            Gmaps.store.userPin = Gmaps.store.handler.addMarker(
+              { lat: latLng.lat()
               lng: latLng.lng()
-              date: $('#collapseOne form #date').val()
-            type: 'GET'
-            url: '/find-events'
-          )
-          Gmaps.store.handler.removeMarker Gmaps.store.userPin if Gmaps.store.userPin
-          Gmaps.store.userPin = Gmaps.store.handler.addMarker(
-            { lat: latLng.lat()
-            lng: latLng.lng()
-            marker_title: 'Your Location... Drag me!'
-            picture: 
-              anchor: [10,34]
-              url: image_path('purple_marker.png')
-              width: 20
-              height: 34
-            shadow:
-              anchor: [2,22]
-              url: image_path('sprite_shadow.png')
-              width: 29
-              height: 22 },
-            { draggable: true
-            animation: google.maps.Animation.BOUNCE }
-          )
-          # Listen to drag & drop
-          google.maps.event.addListener Gmaps.store.userPin.getServiceObject(), "dragend", (event) ->
-            updateUserForm event.latLng
-            $('#collapseOne').collapse('show');
-        else
-          throw status + ' for ' + address
+              marker_title: 'Your Location... Drag me!'
+              picture: 
+                anchor: [10,34]
+                url: image_path('purple_marker.png')
+                width: 20
+                height: 34
+              shadow:
+                anchor: [2,22]
+                url: image_path('sprite_shadow.png')
+                width: 29
+                height: 22 },
+              { draggable: true
+              animation: google.maps.Animation.BOUNCE }
+            )
+            # Listen to drag & drop
+            google.maps.event.addListener Gmaps.store.userPin.getServiceObject(), "dragend", (event) ->
+              updateUserForm event.latLng
+              $('#collapseOne').collapse('show');
+          else
+            throw status + ' for ' + address
+    else
+      no
       
   $('#accordion').on 'show.bs.collapse', ->
     $('#accordion .in').collapse('hide')
@@ -190,7 +219,7 @@ updateUserForm = (latLng) ->
 
 # event searching... find location, move map, set bounds, search bounds
 @typeLocation = (input, marker_function)->
-  if $(input).val()
+  if $(input).val().length > 1
     geocoder = new google.maps.Geocoder()
     address = $(input).val()
     geocoder.geocode address: address, (results, status) ->

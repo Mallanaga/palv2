@@ -78,15 +78,15 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @events = []
     if current_user?(@user)
-      @events += @user.attended_events.where('finish > ?', Date.current.beginning_of_day)
+      @events += @user.attended_events.where('finish >= ?', Date.current.beginning_of_day)
     else
       # public events of your pals
-      @events += @user.attended_events.where('finish > ?', Date.current.beginning_of_day)
+      @events += @user.attended_events.where('finish >= ?', Date.current.beginning_of_day)
                                      .where(:private => false)
       # private events of your pals where you were also invited
-      @events += (@user.attended_events.where('finish > ?', Date.current.beginning_of_day)
+      @events += (@user.attended_events.where('finish >= ?', Date.current.beginning_of_day)
                   .where(:private => true) & 
-                  current_user.invited_events.where('finish > ?', Date.current.beginning_of_day)
+                  current_user.invited_events.where('finish >= ?', Date.current.beginning_of_day)
                   .where(:private => true)
                  )   
     end

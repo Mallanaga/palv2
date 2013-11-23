@@ -18,4 +18,4 @@
             posted 
             = time_ago_in_words(comment.created_at)
             ago
-        %p.list-group-item-text= comment.comment 
+        %p.list-group-item-text= parse_links(comment.comment)

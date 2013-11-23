@@ -8,6 +8,23 @@
   text-shadow: 0 1px 0 #ffffff;
   opacity: 0.2;
   filter: alpha(opacity=20);
+  &.refresh {
+    z-index: 99;
+    font-size: 19px;
+    top: 1px;
+  }
+  &.badge {
+    position: relative;
+    top: -3px;
+    font-size: 17px;
+    color: white;
+    text-shadow: none;
+    &.new {
+      opacity: 0.5;
+      filter: alpha(opacity=50);
+      background-color: #ff8500;
+    }
+  }
   &:hover,
   &:focus {
     color: #000000;
@@ -15,11 +32,6 @@
     cursor: pointer;
     opacity: 0.5;
     filter: alpha(opacity=50);
-  }
-  &.refresh {
-    z-index: 99;
-    font-size: 19px;
-    top: 1px;
   }
 }
 

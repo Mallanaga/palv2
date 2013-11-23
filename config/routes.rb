@@ -12,6 +12,8 @@ Gmaps::Application.routes.draw do
   get '/signout',             to: 'sessions#destroy', via: :delete
   get '/find-events',         to: 'events#find', as: :find_events
   get '/find-users',          to: 'users#find', as: :find_users
+  get '/find-tags',           to: 'categories#find', as: :find_tags
+  get '/create-tags',         to: 'categories#create', as: :create_tags
   get '/invite-users',        to: 'users#invite'
   get '/notifications',       to: 'activities#index'
   get '/settings',            to: 'users#settings'
@@ -38,6 +40,7 @@ Gmaps::Application.routes.draw do
   resources :attendances,       only: [:create, :destroy]
   resources :invites,           only: [:create, :destroy]
   resources :comments,          only: [:create, :destroy, :update]
+  resources :categories,        only: [:index]
 
   # Example resource route with options:
   #   resources :products do

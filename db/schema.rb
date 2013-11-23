@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131120162729) do
+ActiveRecord::Schema.define(version: 20131122194547) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -24,11 +24,13 @@ ActiveRecord::Schema.define(version: 20131120162729) do
     t.string   "recipient_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "viewed",         default: false
   end
 
   add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
   add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
   add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
+  add_index "activities", ["viewed"], name: "index_activities_on_viewed"
 
   create_table "attendances", force: true do |t|
     t.integer  "event_id"
@@ -40,6 +42,12 @@ ActiveRecord::Schema.define(version: 20131120162729) do
   end
 
   add_index "attendances", ["event_id", "user_id"], name: "index_attendances_on_event_id_and_user_id", unique: true
+
+  create_table "categories", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "comments", force: true do |t|
     t.integer  "event_id"
@@ -100,6 +108,15 @@ ActiveRecord::Schema.define(version: 20131120162729) do
   end
 
   add_index "relationships", ["sharee_id", "sharer_id"], name: "index_relationships_on_sharee_id_and_sharer_id", unique: true
+
+  create_table "tags", force: true do |t|
+    t.integer  "event_id"
+    t.integer  "category_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tags", ["category_id"], name: "index_tags_on_category_id"
 
   create_table "users", force: true do |t|
     t.string   "name"

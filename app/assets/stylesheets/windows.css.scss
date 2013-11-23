@@ -259,4 +259,12 @@ h1, h2, h3 {
   top: 40%;
   width: 400px;
   height: 200px;
+} 
+
+ul.token-input-list-facebook {
+  min-height: 34px;
+  li {
+    height: 26px !important;
+    padding: 4px;
+  }
 }

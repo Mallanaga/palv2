@@ -4,6 +4,9 @@
   = f.label :name, class: 'control-label'
   = f.text_field :name, class: 'form-control'
 .form-group
+  = f.label :category_tokens, 'Tags', class: 'control-label'
+  = f.text_field :category_tokens, data: {load: @event.categories}, class: 'form-control'
+.form-group
   .input-daterange
     = f.label :start, 'Date', class: 'control-label'
     .row

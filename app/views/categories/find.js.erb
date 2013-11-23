@@ -1,0 +1,23 @@
+<% if @events.any? %>
+  $('#collapseTwo ul').html("<%= j render partial: 'events/sidebar', collection: @events %>");
+  Gmaps.store.handler.removeMarkers(Gmaps.store.markers);
+  Gmaps.store.markers = Gmaps.store.handler.addMarkers(<%= raw @hash.to_json %>, {
+    draggable: false,
+    animation: google.maps.Animation.DROP
+  });
+  Gmaps.store.handler.bounds.extendWith(Gmaps.store.markers);
+  Gmaps.store.handler.fitMapToBounds();
+<% else %>
+  <% if signed_in? %>
+    $('#collapseTwo ul').html("<p class='empty'>Nothing seems to be going on here...<br/>Why don't you <a href='/events/new' id='new_event' data-remote='true'>add something!</a></p>");
+  <% else %>
+    $('#collapseTwo ul').html("<p class='empty'>Nothing seems to be going on here...<br/>Why don't you <a href='#collapseFour' id='new_event' data-remote='true' data-toggle='collapse' data-parent='#accordion'>add something!</a></p>");
+  <% end %>
+  Gmaps.store.handler.removeMarkers(Gmaps.store.markers);
+  Gmaps.store.userPin.panTo();
+<% end %>
+
+$('#collapseTwo').collapse('show');
+
+
+

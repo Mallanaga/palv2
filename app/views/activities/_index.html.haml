@@ -1,11 +1,36 @@
 - @activities.each do |activity| 
   .list-group
     -if activity.trackable_type == 'Relationship'
-      = link_to activity.trackable.sharer, class: 'list-group-item', remote: true do
-        %b
+      - if activity.trackable
+        = link_to activity.trackable.sharer, class: 'list-group-item', remote: true do
+          %b
+            = activity.owner.first_name if activity.owner
+          decided to share their palendar with you!
+      - else
+        %a.list-group-item
+          Somebody wanted to share with you... doesn't matter, they're gone now
+    - elsif activity.trackable_type == 'Attendance'
+      - if activity.trackable && activity.trackable.event
+        = link_to activity.trackable.event, class: 'list-group-item', remote: true do
           = activity.owner.first_name if activity.owner
-        = render_activity activity
-    - else 
-      = link_to activity.trackable.event, class: 'list-group-item', remote: true do
-        = activity.owner.first_name if activity.owner
-        = render_activity activity
+          found a sweet event,
+          %b
+            = activity.trackable.event.name
+      - else
+        %a.list-group-item
+          = activity.owner.first_name if activity.owner
+          found an event, but it's since been deleted
+    - else
+      - if activity.trackable && activity.trackable.event
+        = link_to activity.trackable.event, class: 'list-group-item', remote: true do
+          = activity.owner.first_name if activity.owner
+          specifically wants you to attend,
+          %b
+            = activity.trackable.event.name
+      - else
+        %a.list-group-item
+          = activity.owner.first_name if activity.owner
+          thought about doing something, but changed their mind
+
+
+  

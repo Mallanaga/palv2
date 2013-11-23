@@ -23,6 +23,14 @@ $('#createEventWindow #invited_pals').tokenInput('/invite-users.json', {
   hintText: 'Select from your pals'
 });
 
+// tags autocomplete
+$('#createEventWindow #event_category_tokens').tokenInput('/create-tags.json', {
+  theme: 'facebook',
+  preventDuplicates: true,
+  hintText: 'Add and/or create tags',
+  tokenLimit: 3
+});
+
 $('#eventWindow:visible').fadeOut();
 
 $('#createEventWindow:hidden').fadeIn();

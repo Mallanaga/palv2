@@ -3,6 +3,7 @@
 %h2= @event.name
 %h3= best_in_place @event, :start, type: :date
 %h4= best_in_place @event, :description, nil: 'Event description'
+%h5= @event.categories.map{ |c| c.name }.to_sentence
 - if signed_in?
   - if current_user.attending?(@event)
     = form_for current_user.attendances.where(event_id: @event.id)[0], html: { method: :delete }, remote: true do |f| 

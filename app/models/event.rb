@@ -29,12 +29,17 @@ class Event < ActiveRecord::Base
   has_many :attendances, dependent: :destroy              
   has_many :attendees, -> { where "attendances.cancel" => false },
                        through: :attendances, source: :user
+
+  has_many :tags, dependent: :destroy
+  has_many :categories, through: :tags
                    
   validates :name, presence: true, length: { maximum: 120 }
   validates :start, presence: true
   validates_presence_of :lat, message: "couldn't be found"
 
   default_scope { order('start') }
+
+  
 
   def self.locals(lat, lng, range)
     # cos function is good up to 60 people.
@@ -43,6 +48,11 @@ class Event < ActiveRecord::Base
       aoi = people < 61 ? (people**2)/120 : 30
       coorDist(e.lat, e.lng, lat.to_f, lng.to_f) - aoi < range
     end
+  end
+  
+  attr_reader :category_tokens
+  def category_tokens=(tokens)
+    self.category_ids = Category.ids_from_tokens(tokens)
   end
 
 end
