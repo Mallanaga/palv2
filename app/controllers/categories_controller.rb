@@ -3,7 +3,7 @@ class CategoriesController < ApplicationController
 
   def create
     @categories = Category.order(:name)
-    render json: @categories.tokens(params[:q])
+    render json: @categories.tokens(params[:q].gsub(/^[#]/, ''))
   end
 
   def find
@@ -25,7 +25,7 @@ class CategoriesController < ApplicationController
   end
 
   def index
-    @categories = Rails.env.development? ? Category.where("LOWER(name) like ?", "%#{params[:q]}%") : Category.where("LOWER(name) ilike ?", "%#{params[:q]}%")
+    @categories = Rails.env.development? ? Category.where("LOWER(name) like ?", "%#{params[:q].gsub(/^[#]/, '')}%") : Category.where("LOWER(name) ilike ?", "%#{params[:q].gsub(/^[#]/, '')}%")
     render json: @categories
   end
   

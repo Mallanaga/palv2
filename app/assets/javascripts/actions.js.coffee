@@ -20,7 +20,6 @@ jQuery ->
           defaultValue: '#'
       else
 
-
   #this is gross... but it works.
   $('#collapseOne form').submit (e) ->
     no
