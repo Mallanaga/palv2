@@ -13,13 +13,14 @@ jQuery ->
   $(document).on 'click', '#collapseOne form #location', ->
     $('#collapseOne form #location').keyup ->
       if $(this).val().match(/^[#]/)
+        # # is the first thing
         $('#collapseOne form #location').tokenInput '/categories.json', 
           theme: 'facebook'
           preventDuplicates: true
           hintText: 'Search for events by tag'
           defaultValue: '#'
       else
-
+        # just words...
   #this is gross... but it works.
   $('#collapseOne form').submit (e) ->
     no
@@ -114,9 +115,9 @@ jQuery ->
   # get date from datepicker and pass it to a form
   $('.dateSearch').datepicker().on 'changeDate', ->
     dateObject =  $(this).datepicker('getDate')
-    year = dateObject.getFullYear()
-    month =  dateObject.getMonth()+1
-    day = dateObject.getDate()
+    year = dateObject.getUTCFullYear()
+    month =  dateObject.getUTCMonth()+1
+    day = dateObject.getUTCDate()
     $('#collapseOne input#date').val year+'-'+month+'-'+day
 
   mapSize()

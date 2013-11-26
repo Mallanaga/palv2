@@ -1,0 +1,10 @@
+= form_for @user, html: {role: 'form', remote: true} do |f| 
+  = render 'fields', f: f
+  .form-group
+    = f.label :range, 'Range of Interest'
+    = f.select :range, [5, 10, 15, 20, 25], {}, {class: 'form-control'}
+  .form-group
+    = f.label :location
+    = f.time_zone_select :location, ActiveSupport::TimeZone.us_zones, {}, {class: 'form-control'}
+  .form-group.pull-right
+    = f.submit 'Update', class: 'btn btn-primary'

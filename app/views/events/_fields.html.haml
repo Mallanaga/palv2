@@ -6,14 +6,31 @@
 .form-group
   = f.label :category_tokens, 'Tags', class: 'control-label'
   = f.text_field :category_tokens, data: {load: @event.categories}, class: 'form-control'
-.form-group
-  .input-daterange
-    = f.label :start, 'Date', class: 'control-label'
-    .row
-      .col-xs-6
-        = f.text_field :start, class: 'form-control', placeholder: 'start'
-      .col-xs-6
-        = f.text_field :finish, class: 'form-control', placeholder: 'finish'
+.form-group.input-daterange
+  = f.label :start, 'Date', class: 'control-label'
+  .row
+    .col-xs-6
+      .input-group
+        = f.text_field :startDate, class: 'form-control', placeholder: 'start'
+        %span.input-group-addon
+          .glyphicon.glyphicon-calendar
+    .col-xs-6
+      .input-group
+        = f.text_field :finishDate, class: 'form-control', placeholder: 'finish'
+        %span.input-group-addon
+          .glyphicon.glyphicon-calendar
+.form-group.input-timerange
+  .row
+    .col-xs-6
+      .input-group
+        = f.text_field :startTime, class: 'form-control', id: 'tpstart'
+        %span.input-group-addon
+          .glyphicon.glyphicon-time
+    .col-xs-6
+      .input-group
+        = f.text_field :finishTime, class: 'form-control', id: 'tpfinish'
+        %span.input-group-addon
+          .glyphicon.glyphicon-time
 .form-group
   = f.label :description, class: 'control-label'
   = f.text_area :description, class: 'form-control'

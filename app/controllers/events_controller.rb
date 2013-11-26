@@ -1,17 +1,13 @@
 class EventsController < ApplicationController
   include ActionView::Helpers::TextHelper
-  require 'open-uri'
 
   before_filter :correct_user,   only: [:update, :destroy]
   before_filter :signed_in_user, only: [:create, :destroy, :edit, :new, :update]
   respond_to :html, :js, :json
 
   def create
-    Time.zone = Time.zone = JSON.load(open("https://maps.googleapis.com/maps/api/timezone/json?location=#{params[:event][:lat]},#{params[:event][:lng]}&timestamp=1331161200&sensor=false"))["timeZoneId"]
     params[:event][:user_id] = current_user.id
-    params[:event][:start] = params[:event][:start].to_date
-    params[:event][:finish] = params[:event][:finish].to_date
-    params[:event][:finish] = params[:event][:start].to_date if params[:event][:finish].blank?
+    params[:event][:finishDate] = params[:event][:startDate].to_date if params[:event][:finishDate].blank?
     @event = current_user.events.build(event_params)
     if @event.save
       if @event.private?

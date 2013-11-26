@@ -1,4 +1,4 @@
-%h2 Palbum
+%h2= "#{@event.private? ? 'Private' : 'Public'} Photo Album"
 #carousel-palbum.carousel.slide{data: {ride: 'carousel'}}
   /-- Wrapper for slides
   .carousel-inner

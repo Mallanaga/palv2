@@ -16,7 +16,6 @@ Gmaps::Application.routes.draw do
   get '/create-tags',         to: 'categories#create', as: :create_tags
   get '/invite-users',        to: 'users#invite'
   get '/notifications',       to: 'activities#index'
-  get '/settings',            to: 'users#settings'
   get '/history',             to: 'users#history'
   get '/pals',                to: 'events#pals'
 

@@ -56,17 +56,15 @@
           - if signed_in?
             = link_to current_user.first_name, current_user, id: 'show_user_events', remote: true
             = link_to '', signout_path, class: 'glyphicon glyphicon-log-out act-button', title: 'Log Out'
-            = link_to '', settings_path, class: 'glyphicon glyphicon-wrench act-button', title: 'Settings', remote: true
+            = link_to '', edit_user_path(current_user), class: 'glyphicon glyphicon-wrench act-button', title: 'Settings', remote: true
             = link_to '', history_path, class: 'glyphicon glyphicon-time act-button', title: 'History', remote: true
           - else
             = link_to 'Log in', '#collapseFour', data: {toggle: 'collapse', parent: '#accordion'}
       #collapseFour.panel-collapse.collapse
-        - if signed_in?
-          .panel-body
-            %ul
-        - else
-          .panel-body.lo
-            = render('sessions/new')
+        .panel-body
+          %ul
+            - if !signed_in?
+              = render('sessions/new')
 
 = content_tag 'div', id: 'eventWindow', data: {} do
   %a.glyphicon.glyphicon-remove.close{title: 'Close'}

@@ -25,5 +25,5 @@ class @Gmaps.Google.Builders.Map extends Gmaps.Objects.BaseBuilder
       center:    new(@primitives().latLng)(39.8282, -98.5795)
       zoom:      5
       minZoom:   5
-      maxZoom:   16
+      maxZoom:   17
     }

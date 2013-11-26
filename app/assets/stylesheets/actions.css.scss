@@ -56,3 +56,12 @@
   }
   z-index: 99;
 }
+
+.input-timerange {
+  position: relative;
+  top: -13px;
+  margin-bottom: 0px;
+  #tpstart, #tpfinish {
+    text-align: center;
+  }
+}

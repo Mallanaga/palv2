@@ -1,7 +1,6 @@
-= form_for @user, html: {class: 'form-horizontal', role: 'form', remote: true} do |f| 
+= form_for @user, html: {role: 'form', remote: true} do |f| 
   = render 'fields', f: f
-  .form-group
-    .col-sm-offset-1.col-sm-10
-      = f.submit 'Create user', class: 'btn btn-primary'
-      \-or-
-      = link_to 'Log in!', signin_path, class: 'btn btn-default btn-sm', remote: true
+  .form-group.pull-right
+    = f.submit 'Create user', class: 'btn btn-primary'
+    \-or-
+    = link_to 'Log in!', signin_path, class: 'btn btn-default btn-sm', remote: true

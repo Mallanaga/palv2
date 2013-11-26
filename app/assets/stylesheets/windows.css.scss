@@ -56,11 +56,11 @@ h1, h2, h3 {
   #collapseTwo, #collapseFour {
     .panel-body {
       padding: 0px;
-      &.lo {
-        padding: 15px;
-      }
       form {
-        padding-top: 15px;
+        padding: 15px 15px 50px 15px;
+        #user_range {
+          width: 5em;
+        }
       }
     }
     ul {

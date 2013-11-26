@@ -3,6 +3,9 @@ class UsersController < ApplicationController
   respond_to :html, :js, :json
 
   def create
+    if params[:lat] && params[:lng]
+      params[:user][:location] = JSON.load(open("https://maps.googleapis.com/maps/api/timezone/json?location=#{params[:lat]},#{params[:lng]}&timestamp=1331161200&sensor=false"))["timeZoneId"]
+    end
     @user = User.new(user_params)
     if @user.save
       sign_in @user
@@ -29,7 +32,7 @@ class UsersController < ApplicationController
   end
 
   def history
-    @events = current_user.attended_events.where('finish < ?', Date.current.beginning_of_day).reorder(start: :desc)
+    @events = current_user.attended_events.where('finish < ?', DateTime.current).reorder(start: :desc)
     @hash = Gmaps4rails.build_markers(@events) do |event, marker|
       marker.lat event.lat
       marker.lng event.lng
@@ -64,14 +67,6 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     respond_with(@user)
-  end
-
-  def notifications
-    
-  end
-
-  def settings
-    
   end
 
   def show
@@ -114,10 +109,10 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
-      flash[:success] = 'User updated'
-      sign_in current_user
+      sign_in @user
+      respond_with(@user)
     else
-      flash[:error] = 'Invalid User parameters'
+      render 'user/edit'
     end 
   end
 
@@ -128,7 +123,7 @@ class UsersController < ApplicationController
       else
         params.require(:user).permit(
           :name, :email, :gender, :dob, :password,
-          :lat, :lng, :location
+          :lat, :lng, :location, :range
         )
       end
     end

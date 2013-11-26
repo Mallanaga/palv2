@@ -1,8 +1,18 @@
 - if @event.user == current_user && @event.attendees.size < 2
   = link_to '', @event, method: :delete, data: { confirm: "You're sure you want to DELETE this event?" }, class: 'glyphicon glyphicon-remove remove-button', remote: true, title: 'Delete event'
 %h2= @event.name
-%h3= best_in_place @event, :start, type: :date
-%h4= best_in_place @event, :description, nil: 'Event description'
+%h3= @event.location.split(', ')[0]
+- if @event.start.day < @event.finish.day
+  %h4
+    = @event.start.strftime("%A, %b #{@event.start.day.ordinalize} from %-I:%M%P")
+    until
+  %h4= @event.finish.strftime("%A, %b #{@event.finish.day.ordinalize} @ %-I:%M%P")
+- else
+  %h4
+    = @event.start.strftime("%A, %b #{@event.start.day.ordinalize} from %-I:%M%P")
+    to
+    = @event.finish.strftime("%-I:%M%P")
+%h5= best_in_place @event, :description, nil: 'Event description'
 %h5= @event.categories.map{ |c| c.name }.to_sentence
 - if signed_in?
   - if current_user.attending?(@event)

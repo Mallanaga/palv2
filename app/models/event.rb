@@ -34,12 +34,12 @@ class Event < ActiveRecord::Base
   has_many :categories, through: :tags
                    
   validates :name, presence: true, length: { maximum: 120 }
-  validates :start, presence: true
+  # validates :startDate, presence: true
   validates_presence_of :lat, message: "couldn't be found"
 
   default_scope { order('start') }
 
-  
+  before_save :convert_to_start, :convert_to_finish
 
   def self.locals(lat, lng, range)
     # cos function is good up to 60 people.
@@ -53,6 +53,48 @@ class Event < ActiveRecord::Base
   attr_reader :category_tokens
   def category_tokens=(tokens)
     self.category_ids = Category.ids_from_tokens(tokens)
+  end
+
+  # Start
+  def startDate
+    start.strftime("%d/%m/%Y") if start.present?
+  end 
+  def startDate=(date)
+    # Change back to datetime friendly format
+    @startDate = Date.parse(date).strftime("%Y-%m-%d")
+  end
+
+  def startTime
+    start.strftime("%I:%M%p") if start.present?
+  end
+  def startTime=(time)
+    # Change back to datetime friendly format
+    @startTime = Time.parse(time).strftime("%H:%M:%S")
+  end
+  
+  def convert_to_start
+    self.start = DateTime.parse("#{@startDate} #{@startTime}")
+  end
+
+  # Finish
+  def finishDate
+    finish.strftime("%d/%m/%Y") if finish.present?
+  end
+  def finishDate=(date)
+    # Change back to datetime friendly format
+    @finishDate = Date.parse(date).strftime("%Y-%m-%d")
+  end
+
+  def finishTime
+    finish.strftime("%I:%M%p") if finish.present?
+  end
+  def finishTime=(time)
+    # Change back to datetime friendly format
+    @finishTime = Time.parse(time).strftime("%H:%M:%S")
+  end
+
+  def convert_to_finish
+    self.finish = DateTime.parse("#{@finishDate} #{@finishTime}")
   end
 
 end

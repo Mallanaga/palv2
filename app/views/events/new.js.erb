@@ -5,6 +5,12 @@ $('.input-daterange').datepicker({
   autoclose: true,
   format: 'yyyy-mm-dd'
 });
+$('#tpstart').timepicker({
+  disableMousewheel: false
+});
+$('#tpfinish').timepicker({
+  disableMousewheel: false
+});
 
 $('.field_with_errors').parents('.form-group').addClass('has-error');
 
