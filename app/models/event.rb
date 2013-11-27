@@ -39,7 +39,7 @@ class Event < ActiveRecord::Base
 
   default_scope { order('start') }
 
-  before_save :convert_to_start, :convert_to_finish
+  before_create :convert_to_start, :convert_to_finish
 
   def self.locals(lat, lng, range)
     # cos function is good up to 60 people.

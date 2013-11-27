@@ -6,6 +6,9 @@
           %b
             = activity.owner.first_name if activity.owner
           decided to share their palendar with you!
+          %small.time_ago
+            = time_ago_in_words(activity.created_at)
+            ago
       - else
         %a.list-group-item
           Somebody wanted to share with you... doesn't matter, they're gone now
@@ -16,6 +19,9 @@
           found a sweet event,
           %b
             = activity.trackable.event.name
+          %small.time_ago
+            = time_ago_in_words(activity.created_at)
+            ago
       - else
         %a.list-group-item
           = activity.owner.first_name if activity.owner
@@ -27,6 +33,9 @@
           specifically wants you to attend,
           %b
             = activity.trackable.event.name
+          %small.time_ago
+            = time_ago_in_words(activity.created_at)
+            ago
       - else
         %a.list-group-item
           = activity.owner.first_name if activity.owner

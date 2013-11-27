@@ -3,14 +3,13 @@ jQuery ->
   Gmaps.store.handler = Gmaps.build 'Google'
   Gmaps.store.handler.buildMap { internal: {id: 'map'} }, ->
     positionSuccess = (position) ->
-      userLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
       Gmaps.store.handler.map.centerOn
         lat: position.coords.latitude
         lng: position.coords.longitude
-      updateUserMarker userLocation
-      year = new Date().getFullYear()
-      month =  new Date().getMonth()+1
-      day = new Date().getDate()
+      updateUserMarker new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+      year = new Date().getUTCFullYear()
+      month =  new Date().getUTCMonth()+1
+      day = new Date().getUTCDate()
       $.ajax(
         dataType: 'script'
         data:
@@ -37,9 +36,6 @@ jQuery ->
       timeout: 5000
 
     navigator.geolocation.getCurrentPosition(positionSuccess, positionError, geoOptions)
-
-    Gmaps.store.circles = Gmaps.store.handler.addCircles(
-    )
 
     google.maps.event.addListener Gmaps.store.handler.getMap(), 'click', (event) ->
       updateEventMarker event.latLng if $('#createEventWindow').is(':visible')

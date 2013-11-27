@@ -1,73 +1,71 @@
-= content_tag 'div', id: 'map', data: {events: @hash} do
+= content_tag 'div', id: 'map', data: {} do
   - nil
-
-= content_tag 'div', id: 'sideBar', data: {} do
-  #accordion.panel-group
-    .panel.panel-default
-      .panel-heading
-        %h4.panel-title
-          = link_to 'Find things to do', '#collapseOne', data: {toggle: 'collapse', parent: '#accordion'}
-      #collapseOne.panel-collapse.collapse
-        .panel-body
-          = render 'layouts/errors'
-          = form_tag find_events_path, class: 'input-group', method: 'get', remote: true do 
-            = text_field_tag :location, nil, placeholder: 'Location', class: 'form-control'
-            = hidden_field_tag :lat
-            = hidden_field_tag :lng
-            = hidden_field_tag :date, Date.today
-            %span.input-group-btn
-              = submit_tag 'Search', class: 'btn btn-primary'
-          %span.help-block
-            Search by location, or tags with #food
-          .dateSearch
-
-    .panel.panel-default
-      .panel-heading
-        %h4.panel-title
-          = link_to "Events in <span id='userSearch'>your area</span>".html_safe, nil, id: 'show_events_click', remote: true
-          - if signed_in?
-            = link_to '', new_event_path, class: 'glyphicon glyphicon-plus act-button', id: 'new_event', remote: true, title: 'Add Event'
-          - else
-            = link_to '', '#collapseFour', class: 'glyphicon glyphicon-plus act-button', data: {toggle: 'collapse', parent: '#accordion'}, title: 'Add Event'   
-      #collapseTwo.panel-collapse.collapse
-        .panel-body
-          %ul
-                
-    - if signed_in?  
+.row#main-menu
+  = content_tag 'div', id: 'sideBar', data: {}, class: 'col-lg-3 col-lg-offset-1 col-md-3 col-md-offset-1 col-sm-4 col-sm-offset-1 col-xs-12' do
+    #accordion.panel-group
       .panel.panel-default
         .panel-heading
           %h4.panel-title
-            = link_to 'Pals', pals_path, remote: true
-            = link_to '', users_path, class: 'glyphicon glyphicon-search act-button', title: 'Pals', remote: true
-            = link_to notifications_path, id: 'notifications', title: 'Notifications', remote: true do
-              - if PublicActivity::Activity.where(recipient_id: current_user.id, recipient_type: 'User').where(viewed: false).size > 0
-                %span.badge.act-button.new
-                  = PublicActivity::Activity.where(recipient_id: current_user.id, recipient_type: 'User').where(viewed: false).size
-              - else
-                %span.badge.act-button
-                  0
-        #collapseThree.panel-collapse.collapse
+            = link_to 'Find things to do', '#collapseOne', data: {toggle: 'collapse', parent: '#accordion'}
+        #collapseOne.panel-collapse.collapse
+          .panel-body
+            = render 'layouts/errors'
+            = form_tag find_events_path, class: 'input-group', method: 'get', remote: true do 
+              = text_field_tag :location, nil, placeholder: 'Location', class: 'form-control'
+              = hidden_field_tag :lat
+              = hidden_field_tag :lng
+              = hidden_field_tag :date, Date.current
+              %span.input-group-btn
+                = submit_tag 'Search', class: 'btn btn-primary'
+            %span.help-block
+              Search by location, or tags with #food
+            .dateSearch
+
+      .panel.panel-default
+        .panel-heading
+          %h4.panel-title
+            = link_to "Events in <span id='userSearch'>your area</span>".html_safe, nil, id: 'show_events_click', remote: true
+            - if signed_in?
+              = link_to '', new_event_path, class: 'glyphicon glyphicon-plus act-button', id: 'new_event', remote: true, title: 'Add Event'
+            - else
+              = link_to '', '#collapseFour', class: 'glyphicon glyphicon-plus act-button', data: {toggle: 'collapse', parent: '#accordion'}, title: 'Add Event'   
+        #collapseTwo.panel-collapse.collapse
+          .panel-body
+            %ul
+                  
+      - if signed_in?  
+        .panel.panel-default
+          .panel-heading
+            %h4.panel-title
+              = link_to 'Pals', pals_path, remote: true
+              = link_to '', users_path, class: 'glyphicon glyphicon-search act-button', title: 'Pals', remote: true
+              = link_to notifications_path, id: 'notifications', title: 'Notifications', remote: true do
+                - if PublicActivity::Activity.where(recipient_id: current_user.id, recipient_type: 'User').where(viewed: false).size > 0
+                  %span.badge.act-button.new
+                    = PublicActivity::Activity.where(recipient_id: current_user.id, recipient_type: 'User').where(viewed: false).size
+                - else
+                  %span.badge.act-button
+                    0
+          #collapseThree.panel-collapse.collapse
+            .panel-body
+              %ul
+
+      .panel.panel-default
+        .panel-heading
+          %h4.panel-title
+            - if signed_in?
+              = link_to current_user.first_name, current_user, id: 'show_user_events', remote: true
+              = link_to '', signout_path, class: 'glyphicon glyphicon-log-out act-button', title: 'Log Out', remote: true
+              = link_to '', edit_user_path(current_user), class: 'glyphicon glyphicon-wrench act-button', title: 'Settings', remote: true
+              = link_to '', history_path, class: 'glyphicon glyphicon-time act-button', title: 'History', remote: true
+            - else
+              = link_to 'Log in', signin_path, remote: true
+        #collapseFour.panel-collapse.collapse
           .panel-body
             %ul
 
-    .panel.panel-default
-      .panel-heading
-        %h4.panel-title
-          - if signed_in?
-            = link_to current_user.first_name, current_user, id: 'show_user_events', remote: true
-            = link_to '', signout_path, class: 'glyphicon glyphicon-log-out act-button', title: 'Log Out'
-            = link_to '', edit_user_path(current_user), class: 'glyphicon glyphicon-wrench act-button', title: 'Settings', remote: true
-            = link_to '', history_path, class: 'glyphicon glyphicon-time act-button', title: 'History', remote: true
-          - else
-            = link_to 'Log in', '#collapseFour', data: {toggle: 'collapse', parent: '#accordion'}
-      #collapseFour.panel-collapse.collapse
-        .panel-body
-          %ul
-            - if !signed_in?
-              = render('sessions/new')
+  = content_tag 'div', id: 'eventWindow', data: {}, class: 'col-lg-8 col-md-8 col-sm-7 col-xs-12' do
+    %a.glyphicon.glyphicon-remove.close{title: 'Close'}
 
-= content_tag 'div', id: 'eventWindow', data: {} do
-  %a.glyphicon.glyphicon-remove.close{title: 'Close'}
-
-= content_tag 'div', id: 'createEventWindow', data: {} do
-  %a.glyphicon.glyphicon-remove.close{title: 'Close'}
+  = content_tag 'div', id: 'createEventWindow', data: {}, class: 'col-lg-2 col-md-3 col-sm-4 col-xs-12' do
+    %a.glyphicon.glyphicon-remove.close{title: 'Close'}

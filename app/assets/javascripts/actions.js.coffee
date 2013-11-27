@@ -128,7 +128,6 @@ jQuery ->
 mapSize = ->
   height = $(window).height()
   $('#map').css height: height
-  $('#eventWindow').css height: height-120
   $('#sideBar .panel-body').css maxHeight: height*0.6
 
 @showMarkers = ->

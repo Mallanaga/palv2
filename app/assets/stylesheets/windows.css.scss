@@ -20,13 +20,18 @@ h1, h2, h3 {
   margin-top: 0px;
 }
 
-#sideBar {
+#main-menu {
   position: absolute;
-  left: 90px;
-  top: 60px;
-  
-  width: 300px;
+  top: 5%;
+  width: 100%;
+}
 
+#sideBar {
+  //position: absolute;
+  //left: 90px;
+  //top: 6%;
+  //width: 300px;
+  margin-top: 15px;
   .dateSearch {
     margin: 20px auto 10px auto;
     .datepicker {
@@ -169,12 +174,14 @@ h1, h2, h3 {
 
 #eventWindow {
   display: none;
-  position: absolute;
-  top: 60px;
-  left: 395px;
-  width: -webkit-calc(100% - 660px);
-  width: -moz-calc(100% - 660px);
-  width: calc(100% - 660px);
+  margin-top: 15px;
+  //position: absolute;
+  //top: 6%;
+  //left: 395px;
+  //width: -webkit-calc(100% - 660px);
+  //width: -moz-calc(100% - 660px);
+  //width: calc(100% - 660px);
+  height: auto;
   padding: 15px;
   background-color: rgba(255,255,255,.8);
   border: 1px #ddd solid;
@@ -190,7 +197,7 @@ h1, h2, h3 {
   }
   .scroll {
     margin-top: 10px;
-    max-height: 650px;
+    max-height: 100%;
     overflow: auto;
     white-space: nowrap;
     .row {
@@ -203,11 +210,9 @@ h1, h2, h3 {
     top: -21px;
     #carousel-palbum {
       .carousel-inner .item {
-        max-width: 100%;
-        max-height: 550px;
         img {
-          max-height: 550px;
           margin: 0px auto;
+          max-height: 50%;
         }
       }
     }
@@ -239,10 +244,11 @@ h1, h2, h3 {
     display: none;
   }
   display: none;
-  position: absolute;
-  top: 60px;
-  left: 395px;
-  width: 362px;
+  margin-top: 15px;
+  //position: absolute;
+  //top: 60px;
+  //left: 395px;
+  //width: 362px;
   padding: 15px;
   background-color: rgba(255,255,255,.8);
   border: 1px #ddd solid;
@@ -267,4 +273,8 @@ ul.token-input-list-facebook {
     height: 26px !important;
     padding: 4px;
   }
+}
+
+.time_ago {
+  color: lightgrey;
 }
