@@ -12,7 +12,7 @@
     = @event.start.strftime("%A, %b #{@event.start.day.ordinalize} from %-I:%M%P")
     to
     = @event.finish.strftime("%-I:%M%P")
-%h5.description= @event.description
+%h5.description= parse_links(@event.description)
 %h5= @event.categories.map{ |c| c.name }.to_sentence
 - if signed_in?
   - if current_user.attending?(@event)
