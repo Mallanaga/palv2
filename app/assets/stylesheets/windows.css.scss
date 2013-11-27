@@ -20,17 +20,12 @@ h1, h2, h3 {
   margin-top: 0px;
 }
 
-#main-menu {
-  position: absolute;
-  top: 5%;
-  width: 100%;
-}
 
 #sideBar {
-  //position: absolute;
-  //left: 90px;
-  //top: 6%;
-  //width: 300px;
+  position: absolute;
+  left: 90px;
+  top: 5%;
+  width: 300px;
   margin-top: 15px;
   .dateSearch {
     margin: 20px auto 10px auto;
@@ -175,33 +170,38 @@ h1, h2, h3 {
 #eventWindow {
   display: none;
   margin-top: 15px;
-  //position: absolute;
-  //top: 6%;
-  //left: 395px;
-  //width: -webkit-calc(100% - 660px);
-  //width: -moz-calc(100% - 660px);
-  //width: calc(100% - 660px);
-  height: auto;
+  position: absolute;
+  top: 5%;
+  left: 395px;
+  width: -webkit-calc(100% - 500px);
+  width: -moz-calc(100% - 500px);
+  width: calc(100% - 500px);
+  height: 85%;
   padding: 15px;
   background-color: rgba(255,255,255,.8);
   border: 1px #ddd solid;
   @include border-radius( 5px );
   @include box-shadow( 2px 2px 4px rgba(0,0,0,.4) );
+  .row {
+    height: 100%;
+  }
   #comments{
     form {
       margin-bottom: 65px;
     }
-    textarea { 
-      resize: vertical;
-    }
+  }
+  textarea { 
+    resize: vertical;
   }
   .scroll {
-    margin-top: 10px;
     max-height: 100%;
     overflow: auto;
     white-space: nowrap;
     .row {
       max-width: 100%;
+    }
+    .description {
+      white-space: normal;
     }
   }
   #palbum {
@@ -212,7 +212,9 @@ h1, h2, h3 {
       .carousel-inner .item {
         img {
           margin: 0px auto;
-          max-height: 50%;
+          max-height: -webkit-calc(100% - 200px);
+          max-height: -moz-calc(100% - 200px);
+          max-height: calc(100% - 200px);
         }
       }
     }
@@ -245,10 +247,10 @@ h1, h2, h3 {
   }
   display: none;
   margin-top: 15px;
-  //position: absolute;
-  //top: 60px;
-  //left: 395px;
-  //width: 362px;
+  position: absolute;
+  top: 5%;
+  left: 395px;
+  width: 362px;
   padding: 15px;
   background-color: rgba(255,255,255,.8);
   border: 1px #ddd solid;

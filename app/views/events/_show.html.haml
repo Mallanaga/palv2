@@ -1,13 +1,12 @@
 %a.glyphicon.glyphicon-remove.close{title: 'Close'}
 = link_to '', @event, class: 'glyphicon glyphicon-refresh act-button refresh', title: 'Refresh', remote: true
 .row
-  .col-sm-4
+  .col-sm-4.scroll 
     #details
       = render 'events/details'
-    .scroll 
-      #comments
-        = render 'comments/comment'
-      #attendance
-        = render 'attendances/details'
+    #comments
+      = render 'comments/comment'
+    #attendance
+      = render 'attendances/details'
   .col-sm-8#palbum
     = render 'events/palbum'
