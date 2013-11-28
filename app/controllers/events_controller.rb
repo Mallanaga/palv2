@@ -60,6 +60,16 @@ class EventsController < ApplicationController
     respond_with(@events, @hash)
   end
 
+  def import
+    count = Event.import(params[:file])
+    if count > 0
+      flash[:success] = "Events updated with #{count} new things!"
+    else
+      flash[:error] = "No events updated..."
+    end
+    redirect_to root_url
+  end
+
   def index
 
   end

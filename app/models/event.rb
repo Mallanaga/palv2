@@ -17,6 +17,9 @@
 #
 
 class Event < ActiveRecord::Base
+  reverse_geocoded_by :lat, :lng, address: :location
+  geocoded_by :location, latitude: :lat, longitude: :lng
+
   has_many :images
 
   has_many :comments
@@ -46,7 +49,7 @@ class Event < ActiveRecord::Base
     self.select do |e| 
       people = e.attendees.size > e.est_att.to_i ? e.attendees.size : e.est_att.to_i
       aoi = people < 61 ? (people**2)/120 : 30
-      coorDist(e.lat, e.lng, lat.to_f, lng.to_f) - aoi < range
+      Geocoder::Calculations.distance_between([e.lat,e.lng], [lat.to_f,lng.to_f])- aoi < range 
     end
   end
   
@@ -97,28 +100,44 @@ class Event < ActiveRecord::Base
     self.finish = DateTime.parse("#{@finishDate} #{@finishTime}")
   end
 
-end
+  def self.import(file)
+    #number of Events updated
+    ct = 0
 
-private
-  def coorDist(lat1, lon1, lat2, lon2)
-    # Earth's radius in KM
-    earthRadius = 6371
-      # convert degrees to radians
-      def convDegRad(value)
-        unless value.nil? or value == 0
-              value = (value/180) * Math::PI
-        end
-        return value
+    CSV.foreach(file.path, headers: true) do |row|
+      # name
+      name = row['what'] || 
+             row['name']
+
+      # location
+      location = row['where'] || 
+                 row['location']
+      if location
+        latLng = Geocoder.coordinates(location)
+        tz = JSON.load(open("https://maps.googleapis.com/maps/api/timezone/json?location=#{latLng[0]},#{latLng[1]}&timestamp=1331161200&sensor=false"))["timeZoneId"]
+        Chronic.time_class = ActiveSupport::TimeZone.create(tz)
+        # when 
+        start = Chronic.parse(row['when'].to_s) || 
+                Chronic.parse(row['date'].to_s + ' ' + row['time'].to_s)
       end
-    deltaLat = (lat2-lat1)
-    deltaLon = (lon2-lon1)
-    deltaLat = convDegRad(deltaLat)
-    deltaLon = convDegRad(deltaLon)
-    # Calculate square of half the chord length between latitude and longitude
-    a = Math.sin(deltaLat/2) * Math.sin(deltaLat/2) +
-        Math.cos((lat1/180 * Math::PI)) * Math.cos((lat2/180 * Math::PI)) *
-        Math.sin(deltaLon/2) * Math.sin(deltaLon/2); 
-    # Calculate the angular distance in radians
-    c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    distance = earthRadius * c
+      
+      # description
+      description = row['why'] || 
+                    row['about']
+
+      if name && location && start
+        self.create! name: name, 
+                     location: location,
+                     start: start,
+                     finish: start + 2.hours,
+                     description: description
+        ct += 1
+        puts "Event for #{name} in #{tz} timezone added to palendar!"
+      else
+        puts "Not enough info, skipping..."
+      end
+    end
+    ct
   end
+
+end

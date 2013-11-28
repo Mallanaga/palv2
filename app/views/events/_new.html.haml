@@ -3,3 +3,19 @@
 = form_for @event, html: {role: 'form'}, remote: true do |f| 
   = render 'fields', f: f
   = f.submit 'Create event', class: 'btn btn-primary'
+- if admin?
+  %hr
+  #importEvents
+    = form_tag import_events_path, multipart: true do
+      .fileinput.fileinput-new{data: {provides: 'fileinput'}}
+        %span.btn.btn-default.btn-file
+          %span.fileinput-new
+            Select file
+          %span.fileinput-exists
+            Change
+          = file_field_tag :file
+        %span.fileinput-filename
+        %a.fileinput-exists{href: '#', style: 'float: none;', data: {dismiss:'fileinput'}}
+          &times;
+      %br
+      = submit_tag 'Import CSV', class: 'btn btn-warning'

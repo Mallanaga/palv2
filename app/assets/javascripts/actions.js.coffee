@@ -31,8 +31,8 @@ jQuery ->
           dataType: 'script'
           data:
             tags: $('#collapseOne input#location').val()
-            lat: $('#collapseOne input#lat').val latLng.lat()
-            lng: $('#collapseOne input#lng').val latLng.lng()
+            lat: $('#collapseOne input#lat').val()
+            lng: $('#collapseOne input#lng').val()
             date: $('#collapseOne form #date').val()
           type: 'GET'
           url: '/find-tags'

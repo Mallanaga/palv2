@@ -28,6 +28,7 @@ Gmaps::Application.routes.draw do
     resources :images, shallow: true do
       member { post :vote }
     end
+    collection { post :import }
   end
   resources :users do
     member do
