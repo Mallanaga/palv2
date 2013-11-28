@@ -64,7 +64,7 @@ class Event < ActiveRecord::Base
   end 
   def startDate=(date)
     # Change back to datetime friendly format
-    @startDate = Date.parse(date).strftime("%Y-%m-%d")
+    @startDate = Chronic.parse(date).strftime("%Y-%m-%d")
   end
 
   def startTime
@@ -72,11 +72,11 @@ class Event < ActiveRecord::Base
   end
   def startTime=(time)
     # Change back to datetime friendly format
-    @startTime = Time.parse(time).strftime("%H:%M:%S")
+    @startTime = Chronic.parse(time).strftime("%H:%M:%S")
   end
   
   def convert_to_start
-    self.start = DateTime.parse("#{@startDate} #{@startTime}")
+    self.start = Chronic.parse("#{@startDate} #{@startTime}")
   end
 
   # Finish
@@ -85,7 +85,7 @@ class Event < ActiveRecord::Base
   end
   def finishDate=(date)
     # Change back to datetime friendly format
-    @finishDate = Date.parse(date).strftime("%Y-%m-%d")
+    @finishDate = Chronic.parse(date).strftime("%Y-%m-%d")
   end
 
   def finishTime
@@ -93,11 +93,11 @@ class Event < ActiveRecord::Base
   end
   def finishTime=(time)
     # Change back to datetime friendly format
-    @finishTime = Time.parse(time).strftime("%H:%M:%S")
+    @finishTime = Chronic.parse(time).strftime("%H:%M:%S")
   end
 
   def convert_to_finish
-    self.finish = DateTime.parse("#{@finishDate} #{@finishTime}")
+    self.finish = Chronic.parse("#{@finishDate} #{@finishTime}")
   end
 
   def self.import(file)

@@ -6,6 +6,8 @@ class EventsController < ApplicationController
   respond_to :html, :js, :json
 
   def create
+    tz = JSON.load(open("https://maps.googleapis.com/maps/api/timezone/json?location=#{params[:event][:lat]},#{params[:event][:lng]}&timestamp=1331161200&sensor=false"))["timeZoneId"]
+    Chronic.time_class = ActiveSupport::TimeZone.create(tz)
     params[:event][:user_id] = current_user.id
     params[:event][:finishDate] = params[:event][:startDate].to_date if params[:event][:finishDate].blank?
     @event = current_user.events.build(event_params)

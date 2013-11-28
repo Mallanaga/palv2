@@ -7,9 +7,9 @@ jQuery ->
         lat: position.coords.latitude
         lng: position.coords.longitude
       updateUserMarker new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
-      year = new Date().getUTCFullYear()
-      month =  new Date().getUTCMonth()+1
-      day = new Date().getUTCDate()
+      year = new Date().getFullYear()
+      month =  new Date().getMonth()+1
+      day = new Date().getDate()
       $.ajax(
         dataType: 'script'
         data:
