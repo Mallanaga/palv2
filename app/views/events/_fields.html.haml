@@ -1,11 +1,21 @@
 = render 'layouts/error_messages', object: f.object
-
 .form-group
   = f.label :name, class: 'control-label'
   = f.text_field :name, class: 'form-control'
 .form-group
-  = f.label :category_tokens, 'Tags', class: 'control-label'
-  = f.text_field :category_tokens, data: {load: @event.categories}, class: 'form-control'
+  = f.radio_button :private, false
+  = f.label :private, "Public", value: false, title: 'Visible to all'
+  &nbsp;&nbsp;&nbsp;
+  = f.radio_button :private, true
+  = f.label :private, "Private", value: true, title: 'Visible to chosen'
+.form-group#invite_block
+  = label_tag :invited, nil, class: 'control-label'
+  = text_field_tag :invited, nil, class: 'form-control', id: 'invited_pals'
+.form-group
+  = f.label :location, class: 'control-label'
+  = f.text_field :location, placeholder: 'Search here, or click the map to place a pin', class: 'form-control'
+  = f.hidden_field :lat
+  = f.hidden_field :lng
 .form-group.input-daterange
   = f.label :start, 'Date', class: 'control-label'
   .row
@@ -35,16 +45,5 @@
   = f.label :description, class: 'control-label'
   = f.text_area :description, class: 'form-control'
 .form-group
-  = f.radio_button :private, false
-  = f.label :private, "Public", value: false, title: 'Visible to all'
-  &nbsp;&nbsp;&nbsp;
-  = f.radio_button :private, true
-  = f.label :private, "Private", value: true, title: 'Visible to chosen'
-.form-group#invite_block
-  = label_tag :invited, nil, class: 'control-label'
-  = text_field_tag :invited, nil, class: 'form-control', id: 'invited_pals'
-.form-group
-  = f.label :location, class: 'control-label'
-  = f.text_field :location, placeholder: 'Search here, or click the map to place a pin', class: 'form-control'
-  = f.hidden_field :lat
-  = f.hidden_field :lng
+  = f.label :category_tokens, 'Tags', class: 'control-label'
+  = f.text_field :category_tokens, data: {load: @event.categories}, class: 'form-control'

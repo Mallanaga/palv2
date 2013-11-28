@@ -80,6 +80,7 @@ jQuery ->
               $('#collapseOne').collapse('show');
           else
             throw status + ' for ' + address
+        no
     else
       no
       

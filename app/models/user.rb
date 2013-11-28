@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
   has_secure_password validations: false
 
   has_many :images
+  has_many :image_votes, dependent: :destroy
 
   has_many :comments
 
@@ -123,10 +124,18 @@ class User < ActiveRecord::Base
     end while User.exists?(column => self[column])
   end
 
-  private
-    def create_remember_token
-      self.remember_token = SecureRandom.urlsafe_base64
-    end
+  # image votes
+  def can_vote_for?(image)
+    image_votes.build(value: 1, image: image).valid?
+  end
+  def total_votes
+    ImageVote.joins(:image).where(images: {user_id: self.id}).sum('value')
+  end
+
+private
+  def create_remember_token
+    self.remember_token = SecureRandom.urlsafe_base64
+  end
 end
 
 

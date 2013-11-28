@@ -41,6 +41,7 @@ class EventsController < ApplicationController
 
   def edit
     @event = Event.find(params[:id])
+    respond_with(@event)
   end
 
   def find

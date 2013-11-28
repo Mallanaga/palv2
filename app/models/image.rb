@@ -2,6 +2,8 @@ class Image < ActiveRecord::Base
   belongs_to :user
   belongs_to :event
 
+  has_many :image_votes, dependent: :destroy
+
   def taken_by? (photographer)
     self.user == photographer
   end

@@ -1,0 +1,24 @@
+$('#eventWindow #details').html("<%= j render partial: 'events/edit' %>");
+
+$('.input-daterange').datepicker({
+  todayBtn: 'linked',
+  autoclose: true,
+  format: 'yyyy-mm-dd'
+});
+$('#tpstart').timepicker({
+
+});
+$('#tpfinish').timepicker({
+
+});
+
+$('.field_with_errors').parents('.form-group').addClass('has-error');
+
+// tags autocomplete
+$('#eventWindow #event_category_tokens').tokenInput('/create-tags.json', {
+  theme: 'facebook',
+  preventDuplicates: true,
+  hintText: 'Add and/or create tags',
+  tokenLimit: 3,
+  prePopulate: $('#eventWindow #event_category_tokens').data('load')
+});

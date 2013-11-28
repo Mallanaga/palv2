@@ -36,9 +36,8 @@
 }
 
 .remove-button {
-  position: absolute;
-  margin: 10px;
-  right: 0px;
+  float: right;
+  margin: 10px 10px 10px 0px;
   font-size: 21px;
   font-weight: bold;
   color: #fff;
@@ -55,6 +54,63 @@
     cursor: pointer;
   }
   z-index: 99;
+}
+.edit-button {
+  float: right;
+  margin: 10px 10px 10px 0px;
+  font-size: 21px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+  &:hover,
+  &:focus {
+    color: #5bc0de;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  z-index: 99;
+}
+
+.votes {
+  position: absolute;
+  left: 43%;
+  margin: 15px;
+  z-index: 99;
+  .vote-up, .vote-down {
+    font-size: 50px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+  }
+}
+.vote-up {
+  &:hover,
+  &:focus {
+    color: #5bc0de;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+.vote-down {
+  &:hover,
+  &:focus {
+    color: #d9534f;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+    text-decoration: none;
+    cursor: pointer;
+  }
 }
 
 .input-timerange {

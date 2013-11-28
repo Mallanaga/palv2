@@ -63,38 +63,11 @@ h1, h2, h3 {
         }
       }
     }
-    ul {
-      list-style-type: none;
-      margin: 0px;
-      padding: 0px;
+    .list-group {
+      margin-bottom: 0px;
       p.empty {
         margin: 15px;
       }
-      li.sb {
-        height: 70px;
-        cursor: pointer;
-        padding: 10px 15px 0px 15px;
-        border-bottom: 1px solid #e3e3e3;
-        &:last-child {
-          border: none;
-        }
-        color: #777;
-        width: 100%;
-        -webkit-transition: background 0.3s ease;
-        -moz-transition: background 0.3s ease;
-        -o-transition: background 0.3s ease;
-        -ms-transition: background 0.3s ease;
-        transition: background 0.3s ease;
-        &:hover {
-          background: white;
-        }
-      }
-    }
-  }
-
-  #collapseThree {
-    .list-group {
-      margin-bottom: 0px;
       .list-group-item {
         border-top: none;
         border-left: none;
@@ -106,6 +79,33 @@ h1, h2, h3 {
         &:last-child {
           border: none;
         }
+        &.sb {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  #collapseThree {
+    .list-group {
+      margin-bottom: 0px;
+      p.empty {
+        margin: 15px;
+      }
+      .list-group-item {
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        background-color: transparent;
+        &:hover {
+          background: white;
+        }
+        &:last-child {
+          border: none;
+        }
+        &.sb {
+          cursor: pointer;
+        }
       }
     }
     .panel-body {
@@ -114,55 +114,12 @@ h1, h2, h3 {
         padding: 15px;
       }
     }
-    ul {
-      list-style-type: none;
-      margin: 0px;
-      padding: 0px;
-      p.empty {
-        margin: 15px;
+    ul li.pal {
+      p {
+        float: left;
+        margin-top: 7px;
       }
-      li.sb {
-        height: 70px;
-        cursor: pointer;
-        padding: 10px 15px 0px 15px;
-        border-bottom: 1px solid #e3e3e3;
-        &:last-child {
-          border: none;
-        }
-        color: #777;
-        width: 100%;
-        -webkit-transition: background 0.3s ease;
-        -moz-transition: background 0.3s ease;
-        -o-transition: background 0.3s ease;
-        -ms-transition: background 0.3s ease;
-        transition: background 0.3s ease;
-        &:hover {
-          background: white;
-        }
-      }
-      li.pal {
-        p {
-          float: left;
-          margin-top: 7px;
-        }
-        height: 54px;
-        cursor: pointer;
-        padding: 10px 15px 0px 15px;
-        border-bottom: 1px solid #e3e3e3;
-        &:last-child {
-          border: none;
-        }
-        color: #777;
-        width: 100%;
-        -webkit-transition: background 0.3s ease;
-        -moz-transition: background 0.3s ease;
-        -o-transition: background 0.3s ease;
-        -ms-transition: background 0.3s ease;
-        transition: background 0.3s ease;
-        &:hover {
-          background: white;
-        }
-      }
+      height: 54px;
     }
   }
 }
@@ -196,12 +153,8 @@ h1, h2, h3 {
   .scroll {
     max-height: 100%;
     overflow: auto;
-    white-space: nowrap;
     .row {
       max-width: 100%;
-    }
-    .description {
-      white-space: normal;
     }
   }
   #palbum {

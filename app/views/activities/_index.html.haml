@@ -1,45 +1,47 @@
 - @activities.each do |activity| 
-  .list-group
-    -if activity.trackable_type == 'Relationship'
-      - if activity.trackable
-        = link_to activity.trackable.sharer, class: 'list-group-item', remote: true do
-          %b
-            = activity.owner.first_name if activity.owner
-          decided to share their palendar with you!
-          %small.time_ago
-            = time_ago_in_words(activity.created_at)
-            ago
-      - else
-        %a.list-group-item
-          Somebody wanted to share with you... doesn't matter, they're gone now
-    - elsif activity.trackable_type == 'Attendance'
-      - if activity.trackable && activity.trackable.event
-        = link_to activity.trackable.event, class: 'list-group-item', remote: true do
+  -if activity.trackable_type == 'Relationship'
+    - if activity.trackable
+      = link_to activity.trackable.sharer, class: 'list-group-item', remote: true do
+        %b
           = activity.owner.first_name if activity.owner
-          found a sweet event,
-          %b
-            = activity.trackable.event.name
-          %small.time_ago
-            = time_ago_in_words(activity.created_at)
-            ago
-      - else
-        %a.list-group-item
-          = activity.owner.first_name if activity.owner
-          found an event, but it's since been deleted
+        decided to share their palendar with you!
+        %br
+        %small.time_ago
+          = time_ago_in_words(activity.created_at)
+          ago
     - else
-      - if activity.trackable && activity.trackable.event
-        = link_to activity.trackable.event, class: 'list-group-item', remote: true do
-          = activity.owner.first_name if activity.owner
-          specifically wants you to attend,
-          %b
-            = activity.trackable.event.name
-          %small.time_ago
-            = time_ago_in_words(activity.created_at)
-            ago
-      - else
-        %a.list-group-item
-          = activity.owner.first_name if activity.owner
-          thought about doing something, but changed their mind
+      %a.list-group-item
+        Somebody wanted to share with you... doesn't matter, they're gone now
+  - elsif activity.trackable_type == 'Attendance'
+    - if activity.trackable && activity.trackable.event
+      = link_to activity.trackable.event, class: 'list-group-item', remote: true do
+        = activity.owner.first_name if activity.owner
+        found a sweet event,
+        %b
+          = activity.trackable.event.name
+        %br
+        %small.time_ago
+          = time_ago_in_words(activity.created_at)
+          ago
+    - else
+      %a.list-group-item
+        = activity.owner.first_name if activity.owner
+        found an event, but it's since been deleted
+  - else
+    - if activity.trackable && activity.trackable.event
+      = link_to activity.trackable.event, class: 'list-group-item', remote: true do
+        = activity.owner.first_name if activity.owner
+        specifically wants you to attend,
+        %b
+          = activity.trackable.event.name
+        %br
+        %small.time_ago
+          = time_ago_in_words(activity.created_at)
+          ago
+    - else
+      %a.list-group-item
+        = activity.owner.first_name if activity.owner
+        thought about doing something, but changed their mind
 
 
   

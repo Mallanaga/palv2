@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131126184703) do
+ActiveRecord::Schema.define(version: 20131128043301) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -78,6 +78,17 @@ ActiveRecord::Schema.define(version: 20131126184703) do
   add_index "events", ["lat", "lng"], name: "index_events_on_lat_and_lng"
   add_index "events", ["name"], name: "index_events_on_name"
   add_index "events", ["start"], name: "index_events_on_start"
+
+  create_table "image_votes", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "image_id"
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "image_votes", ["image_id"], name: "index_image_votes_on_image_id"
+  add_index "image_votes", ["user_id"], name: "index_image_votes_on_user_id"
 
   create_table "images", force: true do |t|
     t.integer  "event_id"

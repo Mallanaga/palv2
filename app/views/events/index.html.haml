@@ -33,7 +33,7 @@
             = link_to '', '#collapseFour', class: 'glyphicon glyphicon-plus act-button', data: {toggle: 'collapse', parent: '#accordion'}, title: 'Add Event'   
       #collapseTwo.panel-collapse.collapse
         .panel-body
-          %ul
+          %ul.list-group
                 
     - if signed_in?  
       .panel.panel-default
@@ -50,7 +50,7 @@
                   0
         #collapseThree.panel-collapse.collapse
           .panel-body
-            %ul
+            %ul.list-group
 
     .panel.panel-default
       .panel-heading
@@ -64,7 +64,7 @@
             = link_to 'Log in', signin_path, remote: true
       #collapseFour.panel-collapse.collapse
         .panel-body
-          %ul
+          %ul.list-group
 
 = content_tag 'div', id: 'eventWindow', data: {} do
   %a.glyphicon.glyphicon-remove.close{title: 'Close'}

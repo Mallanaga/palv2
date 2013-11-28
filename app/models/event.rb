@@ -39,7 +39,7 @@ class Event < ActiveRecord::Base
 
   default_scope { order('start') }
 
-  before_create :convert_to_start, :convert_to_finish
+  before_save :convert_to_start, :convert_to_finish
 
   def self.locals(lat, lng, range)
     # cos function is good up to 60 people.
@@ -57,7 +57,7 @@ class Event < ActiveRecord::Base
 
   # Start
   def startDate
-    start.strftime("%d/%m/%Y") if start.present?
+    start.strftime("%Y-%m-%d") if start.present?
   end 
   def startDate=(date)
     # Change back to datetime friendly format
@@ -65,7 +65,7 @@ class Event < ActiveRecord::Base
   end
 
   def startTime
-    start.strftime("%I:%M%p") if start.present?
+    start.strftime("%I:%M%P") if start.present?
   end
   def startTime=(time)
     # Change back to datetime friendly format
@@ -78,7 +78,7 @@ class Event < ActiveRecord::Base
 
   # Finish
   def finishDate
-    finish.strftime("%d/%m/%Y") if finish.present?
+    finish.strftime("%Y-%m-%d") if finish.present?
   end
   def finishDate=(date)
     # Change back to datetime friendly format
@@ -86,7 +86,7 @@ class Event < ActiveRecord::Base
   end
 
   def finishTime
-    finish.strftime("%I:%M%p") if finish.present?
+    finish.strftime("%I:%M%P") if finish.present?
   end
   def finishTime=(time)
     # Change back to datetime friendly format
