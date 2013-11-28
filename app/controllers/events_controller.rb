@@ -143,9 +143,9 @@ class EventsController < ApplicationController
   end
 
   def update
-    tz = JSON.load(open("https://maps.googleapis.com/maps/api/timezone/json?location=#{params[:event][:lat]},#{params[:event][:lng]}&timestamp=1331161200&sensor=false"))["timeZoneId"]
-    Chronic.time_class = ActiveSupport::TimeZone.create(tz)
     @event = Event.find(params[:id])
+    tz = JSON.load(open("https://maps.googleapis.com/maps/api/timezone/json?location=#{@event.lat},#{@event.lng}&timestamp=1331161200&sensor=false"))["timeZoneId"]
+    Chronic.time_class = ActiveSupport::TimeZone.create(tz)
     @event.update_attributes(event_params)
     respond_with(@event)
   end
