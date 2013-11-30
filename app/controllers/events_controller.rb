@@ -144,6 +144,7 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
+    #this should just get the tz offset from the database, instead of calling the web, again.
     tz = JSON.load(open("https://maps.googleapis.com/maps/api/timezone/json?location=#{@event.lat},#{@event.lng}&timestamp=1331161200&sensor=false"))["timeZoneId"]
     Chronic.time_class = ActiveSupport::TimeZone.create(tz)
     @event.update_attributes(event_params)

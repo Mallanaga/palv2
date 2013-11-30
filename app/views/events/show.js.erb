@@ -7,6 +7,8 @@ $('#comments .btn-danger').attr('disabled', true);
 
 $('.best_in_place').best_in_place();
 
+$('#palbum .item').first().addClass('active');
+
 $('#fileupload').fileupload({
   add: function(e, data) {
     var file, types;

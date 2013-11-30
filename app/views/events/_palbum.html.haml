@@ -2,7 +2,7 @@
 #carousel-palbum.carousel.slide{data: {ride: 'carousel'}}
   /-- Wrapper for slides
   .carousel-inner
-    -if !@images.empty?
+    -if @images.any?
       = render @images
     -else
       .item.active
@@ -18,7 +18,6 @@
 
 /-- Indicators
 .carousel-previews
-
   = s3_uploader_form post: event_images_url(@event), as: "image[image_url]" do 
     .fileinput.fileinput-new{data: {provides: 'fileinput'}}
       .fileinput-new.thumbnail{style: 'max-width: 200px; max-height: 150px;'}

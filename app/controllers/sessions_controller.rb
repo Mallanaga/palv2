@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out
-    flash.now[:notice] = 'Logged out successfully'
+    flash[:notice] = 'Logged out successfully'
     respond_with()
   end
 

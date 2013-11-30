@@ -1,6 +1,4 @@
-- if preview_counter == 0
-  .fileinput-preview.thumbnail.preview.active{style: 'max-width: 200px; max-height: 150px',data: {target: '#carousel-palbum', 'slide-to' => preview_counter}}
-    = image_tag preview.image_url, style: 'max-height: 140px;'
-- else
-  .fileinput-preview.thumbnail.preview{style: 'max-width: 200px; max-height: 150px',data: {target: '#carousel-palbum', 'slide-to' => preview_counter}}
-    = image_tag preview.image_url, style: 'max-height: 140px;'
+- preview_counter = preview_counter ? preview_counter : 'new'
+
+.fileinput-preview.thumbnail.preview{style: 'max-width: 200px; max-height: 150px',data: {target: '#carousel-palbum', 'slide-to' => preview_counter}}
+  = image_tag preview.image_url, style: 'max-height: 140px;'

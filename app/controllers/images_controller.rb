@@ -7,8 +7,7 @@ class ImagesController < ApplicationController
     params[:image][:user_id] = current_user.id
     @image = @event.images.build(image_params)
     if @image.save
-      @images = @event.images
-      respond_with(@image, @images, @event)
+      respond_with(@image)
     else
       flash[:error] = 'Invalid image'
     end
@@ -19,7 +18,6 @@ class ImagesController < ApplicationController
     @image = Image.find(params[:id])
     @event = @image.event
     @image.update_attributes(event: nil)
-    @images = @event.images
     respond_with(@event, @images)
   end
 

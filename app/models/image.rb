@@ -4,17 +4,18 @@ class Image < ActiveRecord::Base
 
   has_many :image_votes, dependent: :destroy
 
+  default_scope { order('rank desc') }
+
   def taken_by? (photographer)
     self.user == photographer
   end
 
-  def self.by_votes
-    select('images.*, coalesce(value, 0) as votes').
-    joins('left join image_votes on image_id=images.id').
-    order('votes desc')
+  def total_votes
+    ImageVote.joins(:image).where(images: {image_id: self.id}).sum('value')
   end
 
   def votes
     read_attribute(:votes) || image_votes.sum(:value)
   end
+
 end
