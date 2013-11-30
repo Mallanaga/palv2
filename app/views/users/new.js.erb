@@ -1,4 +1,4 @@
-$('#collapseFour .panel-body').html("<%= j render partial: 'users/new' %>");
+$('#collapseFour .panel-body ul').html("<%= j render partial: 'users/new' %>");
 $('.field_with_errors').parents('.form-group').addClass('has-error');
 
 $('#new_user #lat').val($('#collapseOne input#lat').val())

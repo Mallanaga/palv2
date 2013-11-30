@@ -1,9 +1,5 @@
 = form_tag sessions_path, role: 'form', remote: true do
-  - flash.each do |key, value| 
-    .row
-      %div{class: "col-md-10 col-md-offset-1 alert #{flash_class(key)}"}
-        = button_tag('&times;'.html_safe, class: 'close', data: {dismiss: 'alert'}, 'aria-hidden' => 'true')
-        = value
+  = render 'layouts/errors'
   .form-group
     = text_field_tag :email, params[:email], placeholder: 'Email', class: 'form-control'
   .form-group
