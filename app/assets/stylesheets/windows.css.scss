@@ -73,11 +73,17 @@ h1, h2, h3 {
         border-left: none;
         border-right: none;
         background-color: transparent;
-        &:hover {
-          background: white;
-        }
         &:last-child {
           border: none;
+        }
+        &:hover {
+          &:first-child {
+            padding-top: 10px;
+            border-top: none;
+          }
+          background: white;
+          padding-top: 9px;
+          border-top: 1px solid #ddd;
         }
         &.sb {
           cursor: pointer;
@@ -97,11 +103,17 @@ h1, h2, h3 {
         border-left: none;
         border-right: none;
         background-color: transparent;
-        &:hover {
-          background: white;
-        }
         &:last-child {
           border: none;
+        }
+        &:hover {
+          &:first-child {
+            padding-top: 10px;
+            border-top: none;
+          }
+          background: white;
+          padding-top: 9px;
+          border-top: 1px solid #ddd;
         }
         &.sb {
           cursor: pointer;
@@ -158,7 +170,6 @@ h1, h2, h3 {
     }
   }
   #palbum {
-    border-left: 1px #ddd solid;
     position: relative;
     top: -21px;
     #carousel-palbum {
