@@ -197,6 +197,16 @@ h1, h2, h3 {
       }
       .preview {
         display: inline-block;
+        cursor: pointer;
+        -webkit-transition: none;
+        -moz-transition: none;
+        -ms-transition: none;
+        -o-transition: none;
+        transition: none;
+        &:hover {
+          padding: 0px;
+          border: 5px solid #357ebd;
+        }
       }
     }
   }
