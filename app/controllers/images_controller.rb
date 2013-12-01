@@ -7,9 +7,10 @@ class ImagesController < ApplicationController
     params[:image][:user_id] = current_user.id
     @image = @event.images.build(image_params)
     if @image.save
+      current_user.image_votes.new(value: 1, image_id: @image.id).save
       respond_with(@image)
     else
-      flash[:error] = 'Invalid image'
+      flash.now[:error] = 'Invalid image'
     end
 
   end
