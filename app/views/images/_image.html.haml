@@ -1,4 +1,4 @@
-.item
+= content_tag 'div', id: "img#{image.id}", class: 'item' do
   -if image.taken_by? (current_user) || admin?
     = link_to '', image, method: :delete, data: { confirm: "You're sure you want to REMOVE this image from the event?" }, class: 'glyphicon glyphicon-remove remove-button', remote: true, title: 'Remove image'
   - if current_user && current_user.can_vote_for?(image)

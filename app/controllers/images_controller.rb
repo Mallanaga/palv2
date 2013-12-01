@@ -40,11 +40,10 @@ class ImagesController < ApplicationController
   end
 
   def vote
-    vote = current_user.image_votes.new(value: params[:value], image_id: params[:id])
+    @image = Image.find(params[:id])
+    vote = current_user.image_votes.new(value: params[:value], image_id: @image.id)
     if vote.save
-      redirect_to :back, notice: "Thank you for voting."
-    else
-      redirect_to :back, alert: "Unable to vote, perhaps you already did."
+      respond_with(@image)
     end
   end
 

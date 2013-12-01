@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
     else
       self.name.split(' ').last
     end
-  end  
+  end
       
   # invites
   def invited? (event)

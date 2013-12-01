@@ -1,0 +1,10 @@
+- if @image.taken_by? (current_user) || admin?
+  = link_to '', @image, method: :delete, data: { confirm: "You're sure you want to REMOVE this image from the event?" }, class: 'glyphicon glyphicon-remove remove-button', remote: true, title: 'Remove image'
+- if current_user && current_user.can_vote_for?(@image)
+  .votes
+    = link_to '', vote_image_path(@image, value: 1), method: 'post', class: 'glyphicon glyphicon-arrow-up vote-up', remote: true
+    = link_to '', vote_image_path(@image, value: -1), method: 'post', class: 'glyphicon glyphicon-arrow-down vote-down', remote: true
+= image_tag @image.image_url, alt: "#{@image.user.first_name}'s image"
+.carousel-caption
+  = best_in_place_if (signed_in? && current_user.attending?(@image.event)), @image, :description, nil: 'Image desription'
+  = pluralize @image.votes, 'vote'
