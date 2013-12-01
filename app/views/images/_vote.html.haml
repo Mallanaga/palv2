@@ -6,5 +6,5 @@
     = link_to '', vote_image_path(@image, value: -1), method: 'post', class: 'glyphicon glyphicon-arrow-down vote-down', remote: true
 = image_tag @image.image_url, alt: "#{@image.user.first_name}'s image"
 .carousel-caption
-  = best_in_place_if (signed_in? && current_user.attending?(@image.event)), @image, :description, nil: 'Image desription'
-  = pluralize @image.votes, 'vote'
+  = best_in_place_if (signed_in? && current_user.attending?(@image.event)), @image, :description, nil: 'Image desription', type: :textarea
+  %br= pluralize @image.votes, 'vote'

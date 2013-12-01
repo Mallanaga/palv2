@@ -20,7 +20,7 @@
 @import "twitter/bootstrap";
 
 .best_in_place {
-  input, textarea {
+  input {
     @extend .form-control;
     position: relative;
     top: -7px;
@@ -29,5 +29,11 @@
     font-weight: 500;
     line-height: 1.1;
     padding-left: 3px;
+  }
+  textarea {
+    @extend .form-control;
+    height: 100px;
+    resize: none;
+    text-align: center;
   }
 }
