@@ -254,3 +254,13 @@ ul.token-input-list-facebook {
 .time_ago {
   color: lightgrey;
 }
+
+div#map div{
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  img { max-width: none; }
+  div[style*="z-index: 106"] * {
+    @include border-radius( 5px );
+  }
+}
