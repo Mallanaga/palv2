@@ -7,8 +7,10 @@ class ImagesController < ApplicationController
     params[:image][:user_id] = current_user.id
     @image = @event.images.build(image_params)
     if @image.save
-      current_user.image_votes.new(value: 1, image_id: @image.id).save
-      respond_with(@image)
+      vote = current_user.image_votes.new(value: 1, image_id: @image.id)
+      vote.save
+      @count = @event.images.size-1
+      respond_with(@image, @count)
     else
       flash.now[:error] = 'Invalid image'
     end
@@ -17,9 +19,8 @@ class ImagesController < ApplicationController
 
   def destroy
     @image = Image.find(params[:id])
-    @event = @image.event
     @image.update_attributes(event: nil)
-    respond_with(@event, @images)
+    respond_with(@image)
   end
 
   def edit

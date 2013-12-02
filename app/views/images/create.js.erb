@@ -5,8 +5,9 @@
   $('#eventWindow .carousel-previews').append("<%= j render 'preview', preview: @image %>");
 <% end %>
 
-var count = $('#palbum .carousel-inner > .item').length
-$('.carousel-previews .preview').last().data('data-slide-to', count-1);
+$('#palbum .item.active').removeClass('active');
+$("#palbum #img<%= @image.id %>").addClass('active');
+$('.item img[alt="Image placeholder"]').parent().remove();
 
 $('.fileinput').fileinput('clear');
 

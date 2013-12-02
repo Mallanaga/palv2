@@ -1,4 +1,5 @@
-- preview_counter = preview_counter ? preview_counter : 'new'
+- preview_counter = preview_counter ? preview_counter : @count
+- preview = preview ? preview : @image
 
-.fileinput-preview.thumbnail.preview{style: 'max-width: 200px; max-height: 150px',data: {target: '#carousel-palbum', 'slide-to' => preview_counter}}
+.fileinput-preview.thumbnail.preview{id: "pre#{preview.id}", style: 'max-width: 200px; max-height: 150px', data: {target: '#carousel-palbum', 'slide-to' => preview_counter}}
   = image_tag preview.image_url, style: 'max-height: 140px;'
