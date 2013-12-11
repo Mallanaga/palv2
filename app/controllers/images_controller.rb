@@ -7,8 +7,7 @@ class ImagesController < ApplicationController
     params[:image][:user_id] = current_user.id
     @image = @event.images.build(image_params)
     if @image.save
-      vote = current_user.image_votes.new(value: 1, image_id: @image.id)
-      vote.save
+      ImageVote.create(value: 1, image_id: @image.id, user_id: current_user.id)
       @count = @event.images.size-1
       respond_with(@image, @count)
     else

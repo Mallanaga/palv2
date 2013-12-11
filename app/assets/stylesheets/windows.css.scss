@@ -220,6 +220,8 @@ h1, h2, h3 {
     display: none;
   }
   display: none;
+  max-height: 90%;
+  overflow: auto;
   margin-top: 15px;
   position: absolute;
   top: 5%;

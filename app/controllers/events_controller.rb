@@ -73,7 +73,9 @@ class EventsController < ApplicationController
   end
 
   def index
-
+    if signed_in?
+      @notifications = PublicActivity::Activity.where(recipient_id: current_user.id, recipient_type: 'User').where(viewed: false)
+    end
   end
 
   def new

@@ -3,7 +3,8 @@ $("#createEventWindow").html("<%= j render partial: 'events/new' %>");
 $('.input-daterange').datepicker({
   todayBtn: 'linked',
   autoclose: true,
-  format: 'yyyy-mm-dd'
+  format: 'yyyy-mm-dd',
+  todayHighlight: true
 });
 $('#tpstart').timepicker({
 

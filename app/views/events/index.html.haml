@@ -30,7 +30,7 @@
           - if signed_in?
             = link_to '', new_event_path, class: 'glyphicon glyphicon-plus act-button', id: 'new_event', remote: true, title: 'Add Event'
           - else
-            = link_to '', '#collapseFour', class: 'glyphicon glyphicon-plus act-button', data: {toggle: 'collapse', parent: '#accordion'}, title: 'Add Event'   
+            = link_to '', signin_path, class: 'glyphicon glyphicon-plus act-button', remote: true, title: 'Add Event'   
       #collapseTwo.panel-collapse.collapse
         .panel-body
           = render 'layouts/errors'
@@ -43,9 +43,9 @@
             = link_to 'Pals', pals_path, remote: true
             = link_to '', users_path, class: 'glyphicon glyphicon-search act-button', title: 'Pals', remote: true
             = link_to notifications_path, id: 'notifications', title: 'Notifications', remote: true do
-              - if PublicActivity::Activity.where(recipient_id: current_user.id, recipient_type: 'User').where(viewed: false).size > 0
+              - if @notifications.size > 0
                 %span.badge.act-button.new
-                  = PublicActivity::Activity.where(recipient_id: current_user.id, recipient_type: 'User').where(viewed: false).size
+                  = @notifications.size
               - else
                 %span.badge.act-button
                   0

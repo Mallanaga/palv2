@@ -1,5 +1,6 @@
 <% if @events.any? %>
   $('#collapseFour ul').html("<%= j render partial: 'events/sidebar', collection: @events %>");
+  Gmaps.store.handler.resetBounds();
   Gmaps.store.handler.removeMarkers(Gmaps.store.markers);
   Gmaps.store.markers = Gmaps.store.handler.addMarkers(<%= raw @hash.to_json %>, {
     draggable: false,
@@ -10,6 +11,7 @@
 <% else %>
   $('#collapseFour ul').html("<p class='empty'>Nothing in your history...<br/>Why don't you <a href='/events/new' id='new_event' data-remote='true'>add something!</a></p>");
   Gmaps.store.handler.removeMarkers(Gmaps.store.markers);
+  Gmaps.store.handler.resetBounds();
   Gmaps.store.userPin.panTo();
 <% end %>
 

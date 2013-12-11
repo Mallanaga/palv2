@@ -112,6 +112,7 @@ jQuery ->
 
   $('.dateSearch').datepicker
     todayBtn: 'linked'
+    todayHighlight: true
 
   # get date from datepicker and pass it to a form
   $('.dateSearch').datepicker().on 'changeDate', ->
