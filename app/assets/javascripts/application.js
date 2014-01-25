@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.widget
+//= require moment.min.js
+//= require bootstrap-datetimepicker.min.js
 //= require best_in_place.purr
 //= require turbolinks
 //= require twitter/bootstrap

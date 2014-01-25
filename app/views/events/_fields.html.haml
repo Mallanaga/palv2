@@ -16,31 +16,19 @@
   = f.text_field :location, placeholder: 'Search here, or click the map to place a pin', class: 'form-control'
   = f.hidden_field :lat
   = f.hidden_field :lng
-.form-group.input-daterange
+.form-group
   = f.label :start, 'Date', class: 'control-label'
   .row
-    .col-xs-6
-      .input-group
-        = f.text_field :startDate, class: 'form-control', placeholder: 'start'
+    .col-xs-8
+      .input-group.date#dateRange1
         %span.input-group-addon
-          .glyphicon.glyphicon-calendar
-    .col-xs-6
-      .input-group
-        = f.text_field :finishDate, class: 'form-control', placeholder: 'finish'
+          %span.glyphicon.glyphicon-calendar
+        = f.text_field :start, class: 'form-control', placeholder: 'start' 
+    .col-xs-8.col-xs-offset-4
+      .input-group.date#dateRange2
+        = f.text_field :finish, class: 'form-control', placeholder: 'finish'
         %span.input-group-addon
-          .glyphicon.glyphicon-calendar
-.form-group.input-timerange
-  .row
-    .col-xs-6
-      .input-group
-        = f.text_field :startTime, class: 'form-control', id: 'tpstart'
-        %span.input-group-addon
-          .glyphicon.glyphicon-time
-    .col-xs-6
-      .input-group
-        = f.text_field :finishTime, class: 'form-control', id: 'tpfinish'
-        %span.input-group-addon
-          .glyphicon.glyphicon-time
+          %span.glyphicon.glyphicon-calendar
 .form-group
   = f.label :description, class: 'control-label'
   = f.text_area :description, class: 'form-control'

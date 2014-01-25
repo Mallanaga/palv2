@@ -1,17 +1,26 @@
 $("#createEventWindow").html("<%= j render partial: 'events/new' %>");
 
-$('.input-daterange').datepicker({
-  todayBtn: 'linked',
-  autoclose: true,
-  format: 'yyyy-mm-dd',
-  todayHighlight: true
+$('#dateRange1').datetimepicker({
+  minuteStepping: 15
 });
-$('#tpstart').timepicker({
 
+$('#dateRange2').datetimepicker({
+  minuteStepping: 15
 });
-$('#tpfinish').timepicker({
 
+$('#dateRange1').on("change.dp",function (e) {
+  $('#dateRange2').data("DateTimePicker").setStartDate(e.date);
+  if ( !$('#dateRange2 input').val() || $('#dateRange2').data("DateTimePicker").getDate() < e.date ) {
+    $('#dateRange2').data("DateTimePicker").setDate(e.date);
+  }
 });
+$('#dateRange2').on("change.dp",function (e) {
+  $('#dateRange1').data("DateTimePicker").setEndDate(e.date);
+  if ( !$('#dateRange1 input').val() || $('#dateRange1').data("DateTimePicker").getDate() > e.date) {
+    $('#dateRange1').data("DateTimePicker").setDate(e.date);
+  }
+});
+
 
 $('.field_with_errors').parents('.form-group').addClass('has-error');
 
